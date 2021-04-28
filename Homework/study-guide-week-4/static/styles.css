@@ -1,0 +1,77 @@
+body {
+  counter-reset: h3counter;
+  font-family: sans-serif;
+}
+
+input[type=button], input[type=submit], button {
+  padding: 0.5em;
+  background-color: powderblue;
+  border-radius: 10px;
+}
+
+fieldset {
+  border-color: #ccc;
+  box-shadow: 3px 3px 8px #ccc;
+  margin: 2em 1em;
+}
+
+h2 {
+  margin-top: 1em;
+  font-size: 200%;
+}
+
+h3 {
+  margin-top: 2em;
+}
+
+h3:before {
+  counter-increment: h3counter;
+  content: counter(h3counter) ". ";
+}
+
+.hint {
+  border: dashed 1px black;
+  margin: 1em 0;
+  padding: 1em;
+}
+
+.hint:before {
+  font-style: italic;
+  content: "Hint -- hover to reveal";
+}
+
+.hint > div {
+  color: white;
+  padding-top: 1em;
+}
+
+.hint > div:hover {
+  color: black;
+}
+
+.prime-circle {
+  color: white;
+  text-shadow: 2px 2px 3px black;
+  border-radius: 50%;
+  box-shadow: 3px 3px 10px #666;
+  width: 3em;
+  padding: 1em 0;
+  text-align: center;
+  font-size: 200%;
+  font-family: sans-serif;
+  display: inline-block;
+  margin-right: 1em;
+}
+
+#puppies-go-here img {
+  height: 300px;
+}
+
+#attack {
+  background: red;
+  color: white;
+}
+
+#colorHeadings {
+  padding-left: 50px;
+}

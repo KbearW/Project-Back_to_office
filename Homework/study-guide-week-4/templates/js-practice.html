@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Practice JavaScript</title>
+  <link rel="stylesheet" href="static/styles.css">
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h1>JavaScript Practice</h1>
+<p>
+  For each numbered problem, fill in the corresponding <code>&lt;script&gt;</code>
+  section in the source with JavaScript to solve the problem. The location of
+  this file is <strong>templates/js-practice.html</strong>.</p>
+<p>
+  <b>Note:</b> you should only add JavaScript; you cannot change the HTML otherwise <b>at all</b>.
+</p>
+
+<img src="http://thuglifememe.com/wp-content/uploads/2017/08/22-you-got-this-meme-9.jpg">
+
+
+<h2>Plain JavaScript</h2>
+<p>You may not use jQuery for this section!</p>
+
+
+
+<h3>Making an Event Handler</h3>
+<p>
+  Make this button pop up an alert box in the
+  browser window.
+</p>
+
+<fieldset>
+<input type="button" value="Show Me a Popup!" id="popup-alert-button">
+</fieldset>
+
+<script>
+  "use strict";
+function alerMe(evt) {
+  alert('Hi!');
+} 
+</script>
+
+
+
+<h3>Practicing Your Times Tables</h3>
+<p>
+  When the user submits the form below, by default it will go to <code>/nope</code>.
+</p>
+<p>
+  1) Prevent this from happening.
+</p>
+<p>
+  2) Instead, read the values in from the form and create an array containing multiples of the requested number, up to (and including) the requested maximum.
+</p>
+<p>
+  3) Print the array you have made to the console.
+</p>
+
+<fieldset>
+  <form id="multiplying-form" action="/">
+    I want all multiples of
+    <select id="mults-of" name="mults-of">
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+    </select>
+    up to
+    <input id="max" type="number" name="up-to">.
+    <input id="multiply-btn" type="submit" value="Go!">
+  </form>
+
+</fieldset>
+
+<script>
+  "use strict";
+let multForm = document.querySelector('#multiplying-form');
+multForm.addEventListener("Submit", (evt){
+
+  evt.preventDefault();
+
+  let multOf = parseInt(document.querySelector('#mults-of').value);
+  let max = parseInt(document.querySelector("#max").value);
+  let multiples = [];
+  let nextMult = nextMult + multOf;
+
+  while (nextMult <= max) {
+    multiples.push(nextMult);
+    nextMult = nextMult + multsOf;
+  }
+  console.log(multiples);
+});
+
+</script>
+
+<div class="hint">
+  <div>
+    You'll need to cast the form values to integers.
+  </div>
+</div>
+
+
+
+<h2>jQuery</h2>
+<p>You should use jQuery for these parts.</p>
+<p>We didn't include jQuery in this document, though&mdash;so your first task is to include it!</p>
+<div class="hint">
+  <div>
+    Remember you need a script tag in the head of this page that pulls in jQuery's source code.
+  </div>
+</div>
+
+
+
+<h3>Finding the Button</h3>
+<p>
+  When you click this button, pop up an alert box. <b>Remember, you cannot change the HTML!</b>
+</p>
+
+<fieldset>
+  <input type="button" class="find-me" value="Pop-Up Please!">
+</fieldset>
+
+<script>
+    // code here for above problem
+  "use strict";
+  const button = document.querySelector('#find-me');
+  button.addEventListener('click', showAlert);
+
+  const showAlert = (evt) => {
+    alert('Good job!');
+}
+
+</script>
+
+<div class="hint">
+  <div>
+    You can find things by class name.
+  </div>
+</div>
+
+
+
+<h3>Slowly Making a Porcupine</h3>
+<p>
+  After complaints from certain staff about the lack of cute porcupines in our exercises,
+  you're now tasked with having a cute porcupine appear when the button is clicked.
+</p>
+<p>However:</p>
+<ul>
+  <li>There must be a one second pause after the button is clicked before the image appears.</li>
+  <li>You should use a jQuery appear-via-animation method for this to appear. You can
+  try things like <code>fadeIn</code> or <code>slideDown</code>. For extra points, can you
+  make this animation itself happen slowly?</li>
+</ul>
+
+<fieldset>
+  <img src="http://mytrial.typepad.com/.a/6a0147e199a17d970b0153906b3209970b-pi"
+      id="cute-porcupine-image" style="display: none">
+  <input type="button" id="make-a-porcupine" value="I Want a Porcupine!">
+</fieldset>
+
+<script>
+  "use strict";
+  // put your code here
+  // const display_pic = document.querySelector('#make-a-porcupine');
+  // display_pic.addEventListener('click', setTimeout);
+  // const setTimeout () => ("#cute-porcupine-image")} => {
+    
+  // }, timeout);
+</script>
+
+<div class="hint">
+  <div>
+    Remember the <code>setTimeout</code> function we've used in lab.
+    Alternatively, check out the .delay() method in jQuery.
+  </div>
+</div>
+
+
+
+<h3>An Agreeable Form</h3>
+<p>
+  When the user submits the form below, it should fill in the div to agree with the
+  user. So if I say my favorite food is "pretzels," a message should appear in that div
+  that says, "I like pretzels, too."
+</p>
+
+<fieldset>
+  <form action="/oh-no-do-not-go-here" id="agreeable-form">
+    What's your favorite food?
+    <input type="text" name="favorite-food" required
+           id="favorite-food-input">
+    <input type="submit" value="I'm Very Agreeable">
+  </form>
+  <div id="agreeable-text"></div>
+</fieldset>
+
+<script>
+  "use strict";
+  // put your code here
+  function agree(evt) {
+    evt.preventDefault();
+    let theirFood = $('#favorite-food-input').value();
+    $('#agreeable-text').html(`I like ${theirFood}, too!`);
+  }
+
+$('#agreeable-form').on('submit',agree);
+</script>
+
+<div class="hint">
+  <div>
+    Remember how to find the current value in an input field
+    using jQuery?
+  </div>
+</div>
+
+
+
+<h3>Five Colored Primes</h3>
+<p>
+  When the button is pushed, five new circles should appear in the bordered area. Each circle should contain the next prime number, starting with 2. (A prime number is an integer greater than 1 which cannot be divided evenly by any other number other than itself and 1. For example, 11 is prime (you can only divide it by 1 and 11), while 12 is not (you can divide it evenly by 2, 3, 4, and 6, along with 1 and 12).
+</p>
+<p>
+  Each box should have a different color, chosen from the list of colors in the JavaScript. You can re-use our <code>prime-circle</code> class to make your numbers look like ours, if you want (or feel free to experiment with other CSS).
+</p>
+<p>The result should look like:</p>
+<div>
+  <div class="prime-circle" style="background-color: orange">2</div>
+  <div class="prime-circle" style="background-color: midnightblue">3</div>
+  <div class="prime-circle" style="background-color: darkgoldenrod">5</div>
+  <div class="prime-circle" style="background-color: green">7</div>
+  <div class="prime-circle" style="background-color: purple">11</div>
+</div>
+<p>You must calculate the prime numbers; you cannot just hard-code them.</p>
+
+<fieldset>
+  <div id="prime-circle-area"><!-- Your prime circles should appear here! --></div>
+  <input type="button" id="make-prime-circles" value="Button">
+</fieldset>
+
+<script>
+  "use strict";
+
+    var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
+
+  // put the rest of your code here
+</script>
+
+
+
+<h2>AJAX</h2>
+
+
+
+<h3>Got Puppies?</h3>
+<p>
+  Who doesn't like puppies? No one, that's who! Fortunately, we've written a server to serve up as many cute puppies as one could ask for!
+</p>
+<p>
+  Write code so that when the user clicks the "I want puppies!" button, an AJAX request gets sent to the route <code>/puppies.json</code> with the requested number of puppies from the form below, keyed to the name "num-puppies." The route will return the URL of a photo with the specified number of puppies. We've provided a callback function, <code>showPuppies</code>, which will use the results to show the puppies in the <code>puppies-go-here</code> div below.
+</p>
+
+<fieldset>
+  <form id="puppy-form">
+    How many puppies would you like?
+    <select id="num-puppies" name="num-puppies">
+      <option value="1">1 puppy</option>
+      <option value="2">2 puppies</option>
+      <option value="3">3 puppies</option>
+      <option value="lots">A pile of puppies!</option>
+    </select>
+    <input type="submit" value="I want puppies!">
+  </form>
+  <div id="puppies-go-here"></div>
+</fieldset>
+
+<script>
+  "use strict";
+
+  // NOTE: DO NOT CHANGE THE CODE OF THIS FUNCTION
+  function showPuppies(results) {
+    //get the URL for the puppy photo out of the results object
+    var puppyURL = results.url;
+
+    //create a new img element and set its source to be the puppy URL
+    var puppyPhoto = $("<img>").attr("src", puppyURL);
+
+    //clear anything in the div and then add the img element
+     // put your code here
+     
+    $("#puppies-go-here").empty();
+    $("#puppies-go-here").append(puppyPhoto);
+  }
+  let numPuppies = $('#num-puppies').val();
+  let data = {'num-puppies': numPuppies};
+  $.get('/puppies.json', data, showPuppies);
+ 
+
+
+</script>
+
+<div class="hint">
+  <div>
+    What type of request makes more sense here, GET or POST?
+  </div>
+</div>
+
+
+
+<h3>CSS Stuff</h3>
+<p>
+  For those of you interested in more intermediate/complex
+  CSS, take a look at the CSS we use on this page&mdash;it shows off some
+  interesting pseudo-selectors like <code>:before</code> and uses things
+  like CSS numbering. Neat stuff.
+</p>
+
+
+
+</body>
+</html>
