@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Movie, Rating, connect_to_db
+from model import db, User, Office, Rating, connect_to_db
 
 
 # Functions start here!

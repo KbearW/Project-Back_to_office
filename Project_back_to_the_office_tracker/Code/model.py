@@ -1,4 +1,4 @@
-"""Models for movie ratings app."""
+"""Models for back to the office tracker app."""
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -24,40 +24,39 @@ class User(db.Model):
         return f'<User user_id={self.user_id} email={self.email}>'
 
 
-class Movie(db.Model):
-    """A movie."""
+class Office(db.Model):
+    """A office."""
 
-    __tablename__ = 'movies'
+    __tablename__ = 'offices'
 
-    movie_id = db.Column(db.Integer,
+    office_code = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True
                         )
-    title = db.Column(db.String, nullable=False)
-    overview = db.Column(db.Text)
-    release_date = db.Column(db.DateTime)
-    poster_path = db.Column(db.String)
-
-    # .ratings - Get all the ratings for this movie
+    company_name = db.Column(db.String, nullable=False)
+    office_location = db.Column(db.Text, nullable=False)
+    office_atitude = db.Column(db.Float, nullable=False)
+    office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f'<Movie movie_id={self.movie_id} title={self.title}>'
+        return f'<Company office_code={self.office_code} location={self.office_location}>'
 
 
 class Rating(db.Model):
-    """A rating."""
+    """Back to office rating."""
 
     __tablename__ = 'ratings'
 
     rating_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True
-                        )
+                    autoincrement=True,
+                    primary_key=True
+                    )
     score = db.Column(db.Integer)
-    movie_id = db.Column(db.Integer, db.ForeignKey('movies.movie_id'))
+    office_code = db.Column(db.Integer, db.ForeignKey('offices.office_code'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    created_at = db.Column(db.DateTime)
 
-    movie = db.relationship('Movie', backref='ratings')
+    office = db.relationship('Office', backref='ratings')
     user = db.relationship('User', backref='ratings')
 
     def __repr__(self):
