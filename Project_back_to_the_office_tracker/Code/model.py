@@ -18,14 +18,12 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
-        # .ratings - Get all the ratings this User created
-
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
 
 
 class Office(db.Model):
-    """A office."""
+    """A office datapoint."""
 
     __tablename__ = 'offices'
 
@@ -35,7 +33,7 @@ class Office(db.Model):
                         )
     company_name = db.Column(db.String, nullable=False)
     office_location = db.Column(db.Text, nullable=False)
-    office_atitude = db.Column(db.Float, nullable=False)
+    office_latitude = db.Column(db.Float, nullable=False)
     office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
