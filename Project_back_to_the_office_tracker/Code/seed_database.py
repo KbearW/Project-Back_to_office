@@ -9,44 +9,51 @@ import crud
 import model
 import server
 
-os.system('dropdb ratings')
-os.system('createdb ratings')
+os.system('dropdb tracker')
+os.system('createdb tracker')
 model.connect_to_db(server.app, echo=False)
 model.db.create_all()
 
 # Load office data from JSON file
-# with open('data/office.json') as f:
-#     office_data = json.loads(f.read())
+with open('data/offices.json') as f:
+    office_data = json.loads(f.read())
 
-# Create movies, store them in list so we can use them
-# to create fake ratings later
 office_in_db = []
-# for office in office_data:
-#     #unpack each office in office data from json file
-#     company_name, office_location, office_latitue, office_longitude = (office['company_name'],
-#                                     office['office_location'],
-#                                     office['office_latitue'],
-#                                     office['office_longitude'])
+for office in office_data:
+    #unpack each office in office data from json file
+    company_name, office_location, office_latitue, office_longitude = (office['company_name'],
+                                    office['office_location'],
+                                    office['office_latitude'],
+                                    office['office_longitude'])
 
+# db_users = crud.create_user
 
     # create a office and append it to office_in_db
-db_office = crud.create_office(name = 'Facebook', 
-                                location = 'MPK 20 1 Facebook Way', 
-                                latitude = 37.4810185, 
-                                longitude = -122.1550338)
+    db_office = crud.create_office(name=company_name, 
+                                    location=office_location, 
+                                    latitude=office_latitue, 
+                                    longitude=office_longitude)
 
-office_in_db.append(db_office)
 
-# for n in range(10):
-#     email = f'user{n}@test.com'  # Voila! A unique email!
-#     password = 'test'
+    office_in_db.append(db_office)
+    model.db.session.add(db_office)
+model.db.session.commit()
 
-#     # create a user here
-#     user = crud.create_user(email, password)
+for n in range(10):
+    email = f'user{n+1}@test.com'  # Voila! A unique email!
+    password = 'test'
 
-#     # create 10 ratings for the user
-#     for x in range(10):
-#         office = choice(office_in_db) 
-#         score = randint(1,5)
+    # create a user here
+    user = crud.create_user(email, password)
+    print(user)
 
-#         crud.create_rating(user, office, rating)
+    # create 10 ratings for the user
+    
+    for x in range(1):
+        office_code = choice(office_in_db).office_code 
+        score = randint(1,5)
+        # created_at = current(datetime) -- need to work on this
+        print(user.user_id, office_code, score)
+        crud.create_rating( score, office_code, user.user_id)
+
+    

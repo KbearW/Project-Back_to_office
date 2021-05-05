@@ -38,16 +38,18 @@ def get_users():
 
     return User.query.all()
 
+# new_rating= (score='3', office='abc', user_id='2')
 
-def create_rating(user_edit, current_office, new_score):
+def create_rating(new_score, current_office, user_id):
     """Create and return a new rating."""
 
-    new_rating = Rating(user=user_edit, office=current_office, score=new_score)
+    new_rating = Rating(score=new_score, office_code=current_office, user_id=user_id)
 
     db.session.add(new_rating)
     db.session.commit()
 
     return new_rating
+
 
 def get_office_by_code(office_code):
     """Get office ID."""
@@ -63,8 +65,7 @@ def get_user_by_id(user_id):
 def get_user_by_email(email):
     """Get user by email."""
     
-    # print('Get version' User.query.get(email))  This doesn't work. Why not? Is it because GET needs to go with Primary Key?
-    return User.query.filter(User.email == email).first() # Why use filter rather than the GET query on line#59?
+    return User.query.filter(User.email == email).first()
 
 
 

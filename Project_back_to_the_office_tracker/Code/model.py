@@ -11,8 +11,7 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    user_id = db.Column(db.Integer,
-                        autoincrement=True,
+    user_id = db.Column(db.Integer, autoincrement=True,
                         primary_key=True
                         )
     email = db.Column(db.String, unique=True, nullable=False)
@@ -27,9 +26,8 @@ class Office(db.Model):
 
     __tablename__ = 'offices'
 
-    office_code = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True
+    office_code = db.Column(db.Integer, autoincrement=True,
+                            primary_key=True
                         )
     company_name = db.Column(db.String, nullable=False)
     office_location = db.Column(db.Text, nullable=False)
@@ -63,7 +61,7 @@ class Rating(db.Model):
 
 
 
-def connect_to_db(flask_app, db_uri='postgresql:///ratings', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///tracker', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

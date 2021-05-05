@@ -12,20 +12,20 @@ app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
 
-# @app.route('/')
-# def homepage():
-#     """View homepage."""
+@app.route('/')
+def homepage():
+    """View homepage."""
 
-#     return render_template('homepage.html')
+    return render_template('homepage.html')
 
 
-# @app.route('/movies')
-# def all_movies():
-#     """View all movies."""
+@app.route('/offices')
+def all_offices():
+    """View all offices."""
 
-#     movies = crud.get_movies()
+    offices = crud.get_office_by_code()
 
-#     return render_template('all_movies.html', movies=movies)
+    return render_template('all_offices.html', offices=offices)
 
 
 # @app.route('/movies/<movie_id>')
