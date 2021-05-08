@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Form{% endblock %}
+
+{% block body %}
+<h1>Form</h1>
+<form action="/form" method="POST">
+<p>
+Hi, {{user_name}}! Your user_id is:{{user_id}}. 
+<br>
+Let's log your company details:
+</p>
+
+<p>
+</p>Company Name:
+<input type="text" name="company_name">
+</p><p>
+Office Address:
+<input type="text" name="office_location">
+office_longitude
+<input type="text" name="office_longitude">
+office_latitude
+<input type="text" name="office_latitude">
+</p>
+<p>
+Back to the Office Status:
+    <input type="radio" name="back_to_office_status">0%
+    <input type="radio" name="back_to_office_status">20%
+    <input type="radio" name="back_to_office_status">40%
+    <input type="radio" name="back_to_office_status">60%
+    <input type="radio" name="back_to_office_status">100%
+</p>
+<p>
+    Submit
+    <input type="submit">
+
+</p>
+</form>
+
+
+{% endblock %}

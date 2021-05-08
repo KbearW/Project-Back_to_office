@@ -18,33 +18,100 @@ def homepage():
 
     return render_template('homepage.html')
 
+@app.route('/about')
+def about():
+    """Project goal"""
 
-@app.route('/offices')
-def all_offices():
-    """View all offices."""
+    return render_template('about.html')
+
+@app.route('/form', methods=['GET'])
+def form():
+    """Input form"""
+    user_name='Kerrie'
+    user_id=1
+    print(session)
+    # session['user_name']=user_name
+    # session['user_id']=user_id
+    office_longitude=122
+    office_latitude=100
+    # # Need office_latitude=latitude, office_longitude=longitude
+    # crud.create_office(user_name, office_location, office_longitude, office_latitude)
+    return render_template('form.html', user_name=user_name, user_id=user_id)
+
+@app.route('/form', methods=['POST'])
+def submit():
+#     """Input form"""
+    user_name='Kerrie'
+    user_id=1
+    company_name=request.form.get('company_name')
+    office_location=request.form.get('office_location')
+    back_to_office_status=request.form.get('back_to_office_status')
+    office_longitude=request.form.get('office_longitude')
+    office_latitude=request.form.get('office_latitude')
+    crud.create_office(user_name, office_location, office_longitude, office_latitude)
+    # crud.create_rating(back_to_office_status, office_location, '1')
+    
+    return render_template('thankyou.html', user_name=user_name, user_id=user_id)
+
+@app.route('/officeslist')
+def all_offices_list():
+    """View all offices in a list."""
 
     offices = crud.get_office_by_code()
 
-    return render_template('all_offices.html', offices=offices)
+    return render_template('officeslist.html')
+
+@app.route('/officesmap')
+def all_offices_map():
+    """View all offices in a map."""
+
+    offices = crud.get_office_by_code()
+
+    return render_template('officesmap.html')
 
 
-# @app.route('/movies/<movie_id>')
-# def show_movie(movie_id):
-#     """Show details on a particular movie."""
+@app.route('/users')
+def all_users():
+    """View all users."""
+    # session['user_name']=
+    # session['user_id']=
+    users = crud.get_users()
 
-#     movie = crud.get_movie_by_id(movie_id)
-
-#     return render_template('movie_details.html', movie=movie)
+    return render_template('all_users.html', users=users)
 
 
-# @app.route('/users')
-# def all_users():
-#     """View all users."""
+@app.route('/login', methods=['GET'])
+def login():
+    """Login Page."""
 
-#     users = crud.get_users()
+    return render_template('loginpage.html')
 
-#     return render_template('all_users.html', users=users)
 
+@app.route('/login', methods=['POST'])
+def handle_login():
+    """Login."""
+
+    email=request.form['email']
+    password=request.form['password']
+    session['user_name'] = user_name
+    flash(f'You have logged in as {username}!')
+    return redirect('/')
+
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    """Log user into application."""
+
+    username = request.form['username']
+    password = request.form['password']
+
+    if password == 'let-me-in':   # FIXME
+        session['current_user'] = username
+        flash(f'Logged in as {username}')
+        return redirect('/')
+
+    else:
+        flash('Wrong password!')
+        return redirect('/login')
 
 # @app.route('/users', methods=['POST'])
 # def register_user():
