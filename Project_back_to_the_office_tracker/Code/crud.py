@@ -38,12 +38,17 @@ def get_users():
 
     return User.query.all()
 
+def get_coordinates():
+    """Return all coordinates."""
+    
+    return db.session.query(Office.coordinates).all()
+
 # new_rating= (score='3', office='abc', user_id='2')
 
-def create_rating(new_score, current_office, user_id):
+def create_rating(new_score, current_office, user_id, created_at):
     """Create and return a new rating."""
 
-    new_rating = Rating(score=new_score, office_code=current_office, user_id=user_id)
+    new_rating = Rating(score=new_score, office_code=current_office, user_id=user_id, created_at=created_at)
 
     db.session.add(new_rating)
     db.session.commit()

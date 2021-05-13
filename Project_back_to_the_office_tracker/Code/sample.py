@@ -1,5 +1,6 @@
 import requests
 import pprint
+
 def geocode(location):
     url_location = requests.utils.quote(location)
     r = requests.get(f'https://api.mapbox.com/geocoding/v5/mapbox.places/{url_location}.json',
@@ -11,10 +12,12 @@ def geocode(location):
     office_longitude=r.json()['features'][0]['center'][0]
     office_latitude=r.json()['features'][0]['center'][1]
 
-    print(location)
-    print(office_longitude, office_latitude)
-    print("Geocode function is working")
+    # print(location)
+    # print(office_longitude, office_latitude)
+    # print("Geocode function is working")
 
     return [r.json()['features'][0]['center'][0], r.json()['features'][0]['center'][1]]
 
-pprint.pprint(geocode("4 World Trade Center, New York, New York 10006"))
+
+
+# pprint.pprint(geocode("4 World Trade Center, New York, New York 10006"))

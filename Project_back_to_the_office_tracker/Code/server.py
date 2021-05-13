@@ -33,10 +33,7 @@ def form():
     print(session)
     # session['user_name']=user_name
     # session['user_id']=user_id
-    # office_longitude=122
-    # office_latitude=100
-    # # Need office_latitude=latitude, office_longitude=longitude
-    # crud.create_office(user_name, office_location, office_longitude, office_latitude)
+
     return render_template('form.html', user_name=user_name, user_id=user_id)
 
 @app.route('/form', methods=['POST'])
@@ -47,14 +44,9 @@ def submit():
     company_name=request.form.get('company_name')
     office_location=request.form.get('office_location')
     back_to_office_status=request.form.get('back_to_office_status')
-    # print(f"L40:{office_location}")
     coordinates=geocode(office_location)
-    # print(coordinates)
-    # office_longitude=coordinates["office_longitude"]
-    # office_latitude=coordinates["office_latitude"]
-    # crud.create_office(user_name, office_location)
+
     crud.create_office(company_name, office_location, coordinates)
-    # crud.create_rating(back_to_office_status, office_location, '1')
     
     return render_template('thankyou.html', user_name=user_name, user_id=user_id)
 
@@ -77,10 +69,9 @@ def all_offices_map():
 @app.route('/sample')
 def mapDisplay():
     """Map Display."""
-    Office.query.get(office_latitude,office_longitude)
-    office_longitude=request.form.get('office_longitude')
-    office_latitude=request.form.get('office_latitude')
-    return render_template('testing_map.html', office_longitude=office_longitude, office_latitude=office_latitude)
+    coordinates = crud.get_coordinates()
+    print(coordinates)
+    return render_template('testing_map.html', coordinates=coordinates)
 
 @app.route('/users')
 def all_users():

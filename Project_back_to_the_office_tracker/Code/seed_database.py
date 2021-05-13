@@ -2,7 +2,7 @@
 
 import os
 import json
-from random import choice, randint
+from random import choice, randrange
 from datetime import datetime
 
 import crud
@@ -38,7 +38,7 @@ for office in office_data:
 model.db.session.commit()
 
 for n in range(10):
-    email = f'user{n+1}@test.com'  # Voila! A unique email!
+    email = f'user{n+1}@test.com'
     password = 'test'
 
     # create a user here
@@ -49,9 +49,10 @@ for n in range(10):
     
     for x in range(1):
         office_code = choice(office_in_db).office_code 
-        score = randint(1,5)
-        # created_at = current(datetime) -- need to work on this
-        print(user.user_id, office_code, score)
-        crud.create_rating( score, office_code, user.user_id)
+        score = randrange(0,100,20)
+        created_at = datetime.now()
+        print(created_at)
+        print(user.user_id, office_code, score, created_at)
+        crud.create_rating( score, office_code, user.user_id, created_at)
 
     
