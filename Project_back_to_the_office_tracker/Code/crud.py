@@ -16,11 +16,11 @@ def create_user(email_address, passcode):
     return new_user
     
 
-def create_office(name, location, latitude, longitude):
+def create_office(name, location, coordinates):
     """Create and return a new office."""
 
     new_office = Office(company_name=name, office_location=location, 
-    office_latitude=latitude, office_longitude=longitude)
+    coordinates=coordinates)
     
     db.session.add(new_office)
     db.session.commit()

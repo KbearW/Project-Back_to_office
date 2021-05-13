@@ -21,18 +21,16 @@ with open('data/offices.json') as f:
 office_in_db = []
 for office in office_data:
     #unpack each office in office data from json file
-    company_name, office_location, office_latitue, office_longitude = (office['company_name'],
+    company_name, office_location, coordinates = (office['company_name'],
                                     office['office_location'],
-                                    office['office_latitude'],
-                                    office['office_longitude'])
+                                    office['coordinates'])
 
 # db_users = crud.create_user
 
     # create a office and append it to office_in_db
     db_office = crud.create_office(name=company_name, 
                                     location=office_location, 
-                                    latitude=office_latitue, 
-                                    longitude=office_longitude)
+                                    coordinates=coordinates)
 
 
     office_in_db.append(db_office)

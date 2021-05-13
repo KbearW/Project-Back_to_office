@@ -2,10 +2,11 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect)
-from model import connect_to_db
+from model import connect_to_db, Office
 import crud
-
+from sample import geocode
 from jinja2 import StrictUndefined
+
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -32,8 +33,8 @@ def form():
     print(session)
     # session['user_name']=user_name
     # session['user_id']=user_id
-    office_longitude=122
-    office_latitude=100
+    # office_longitude=122
+    # office_latitude=100
     # # Need office_latitude=latitude, office_longitude=longitude
     # crud.create_office(user_name, office_location, office_longitude, office_latitude)
     return render_template('form.html', user_name=user_name, user_id=user_id)
@@ -46,9 +47,13 @@ def submit():
     company_name=request.form.get('company_name')
     office_location=request.form.get('office_location')
     back_to_office_status=request.form.get('back_to_office_status')
-    office_longitude=request.form.get('office_longitude')
-    office_latitude=request.form.get('office_latitude')
-    crud.create_office(user_name, office_location, office_longitude, office_latitude)
+    # print(f"L40:{office_location}")
+    coordinates=geocode(office_location)
+    # print(coordinates)
+    # office_longitude=coordinates["office_longitude"]
+    # office_latitude=coordinates["office_latitude"]
+    # crud.create_office(user_name, office_location)
+    crud.create_office(company_name, office_location, coordinates)
     # crud.create_rating(back_to_office_status, office_location, '1')
     
     return render_template('thankyou.html', user_name=user_name, user_id=user_id)
@@ -69,6 +74,13 @@ def all_offices_map():
 
     return render_template('officesmap.html')
 
+@app.route('/sample')
+def mapDisplay():
+    """Map Display."""
+    Office.query.get(office_latitude,office_longitude)
+    office_longitude=request.form.get('office_longitude')
+    office_latitude=request.form.get('office_latitude')
+    return render_template('testing_map.html', office_longitude=office_longitude, office_latitude=office_latitude)
 
 @app.route('/users')
 def all_users():
@@ -97,21 +109,28 @@ def handle_login():
     flash(f'You have logged in as {username}!')
     return redirect('/')
 
-@app.route('/handle-login', methods=['POST'])
-def handle_login():
-    """Log user into application."""
+@app.route('/testing_map')
+def testing_map():
+    """View homepage."""
 
-    username = request.form['username']
-    password = request.form['password']
+    return render_template('testing_map.html')
 
-    if password == 'let-me-in':   # FIXME
-        session['current_user'] = username
-        flash(f'Logged in as {username}')
-        return redirect('/')
 
-    else:
-        flash('Wrong password!')
-        return redirect('/login')
+# @app.route('/handle-login', methods=['POST'])
+# def handle_login():
+#     """Log user into application."""
+
+#     username = request.form['username']
+#     password = request.form['password']
+
+#     if password == 'let-me-in':   # FIXME
+#         session['current_user'] = username
+#         flash(f'Logged in as {username}')
+#         return redirect('/')
+
+#     else:
+#         flash('Wrong password!')
+#         return redirect('/login')
 
 # @app.route('/users', methods=['POST'])
 # def register_user():

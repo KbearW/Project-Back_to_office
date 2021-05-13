@@ -2,9 +2,9 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy.dialects import postgresql
 
 db = SQLAlchemy()
-
 
 class User(db.Model):
     """A user."""
@@ -31,8 +31,9 @@ class Office(db.Model):
                         )
     company_name = db.Column(db.String, nullable=False)
     office_location = db.Column(db.Text, nullable=False)
-    office_latitude = db.Column(db.Float, nullable=False)
-    office_longitude = db.Column(db.Float, nullable=False)
+    coordinates = db.Column(postgresql.ARRAY(db.Float), nullable=False)
+    # office_latitude = db.Column(db.Float, nullable=False)
+    # office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return f'<Company office_code={self.office_code} location={self.office_location}>'
