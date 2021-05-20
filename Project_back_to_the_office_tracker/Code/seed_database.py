@@ -8,6 +8,7 @@ from datetime import datetime
 import crud
 import model
 import server
+from pprint import pprint
 
 os.system('dropdb tracker')
 os.system('createdb tracker')
@@ -18,19 +19,26 @@ model.db.create_all()
 with open('data/offices.json') as f:
     office_data = json.loads(f.read())
 
+# pprint(office_data)
+
 office_in_db = []
 for office in office_data:
     #unpack each office in office data from json file
-    company_name, office_location, coordinates = (office['company_name'],
+    print(office)
+    company_name, office_location, office_latitude, office_longitude = (
+                                    office['company_name'],
                                     office['office_location'],
-                                    office['coordinates'])
+                                    office['office_latitude'],
+                                    office['office_longitude'])
+    
 
 # db_users = crud.create_user
 
     # create a office and append it to office_in_db
-    db_office = crud.create_office(name=company_name, 
-                                    location=office_location, 
-                                    coordinates=coordinates)
+    db_office = crud.create_office(company_name, 
+                                    office_location, 
+                                    office_latitude,
+                                    office_longitude)
 
 
     office_in_db.append(db_office)
@@ -38,11 +46,11 @@ for office in office_data:
 model.db.session.commit()
 
 for n in range(10):
-    email = f'user{n+1}@test.com'
+    user = f'user{n+1}@test.com'
     password = 'test'
 
     # create a user here
-    user = crud.create_user(email, password)
+    user = crud.create_user(user, password)
     print(user)
 
     # create 10 ratings for the user
@@ -50,9 +58,9 @@ for n in range(10):
     for x in range(1):
         office_code = choice(office_in_db).office_code 
         score = randrange(0,100,20)
-        created_at = datetime.now()
-        print(created_at)
-        print(user.user_id, office_code, score, created_at)
-        crud.create_rating( score, office_code, user.user_id, created_at)
+        # created_at = datetime.now()
+        # print(created_at)
+        # print(user.user_id, office_code, score, created_at)
+        crud.create_rating( score, office_code, user.user_id)
 
     

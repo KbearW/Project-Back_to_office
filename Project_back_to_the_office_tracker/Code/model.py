@@ -14,11 +14,11 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True,
                         primary_key=True
                         )
-    email = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
     def __repr__(self):
-        return f'<User user_id={self.user_id} email={self.email}>'
+        return f'<User user_id={self.user_id} username={self.username}>'
 
 
 class Office(db.Model):
@@ -31,9 +31,9 @@ class Office(db.Model):
                         )
     company_name = db.Column(db.String, nullable=False)
     office_location = db.Column(db.Text, nullable=False)
-    coordinates = db.Column(postgresql.ARRAY(db.Float), nullable=False)
-    # office_latitude = db.Column(db.Float, nullable=False)
-    # office_longitude = db.Column(db.Float, nullable=False)
+    # coordinates = db.Column(postgresql.ARRAY(db.Float), nullable=False)
+    office_latitude = db.Column(db.Float, nullable=False)
+    office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return f'<Company office_code={self.office_code} location={self.office_location}>'
@@ -48,10 +48,10 @@ class Rating(db.Model):
                     autoincrement=True,
                     primary_key=True
                     )
-    score = db.Column(db.Integer)
+    rating = db.Column(db.Integer)
     office_code = db.Column(db.Integer, db.ForeignKey('offices.office_code'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    created_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
     office = db.relationship('Office', backref='ratings')
     user = db.relationship('User', backref='ratings')

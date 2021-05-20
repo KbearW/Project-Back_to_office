@@ -5,7 +5,17 @@
 <h1>Office in a map</h1>
 
 <ul>
-A map of all available data so far...
-</ul>
+A list of all available data so far...
+<h1>All Users</h1>
 
+<ul>
+    {% for office in offices %}
+    <li>
+    <a href="/offices/{{offices.company_name}}">
+        {{ office.company_name }}
+    </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
+

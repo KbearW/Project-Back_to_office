@@ -2,10 +2,37 @@
 {% block title %}List view{% endblock %}
 
 {% block body %}
-<h1>Office in a list</h1>
 
-<ul>
 A list of all available data so far...
-</ul>
+<div class="content">
+    <h1>Office in a list</h1>
 
+<table>
+    <tr>
+        <th>Company Name</th>
+        <th># of Ratings</th>
+        <th>Latest Update</th>
+    </tr>
+        
+
+    {% for office in offices %}
+        <tr>
+            <td> {{office.office_code}}</td>
+            <td><a href="{{ office.company_name }}">{{office.company_name}}</a></td>
+            <td>{{ office.office_location }}</td>
+            
+
+            <!-- This issue here is that L27's office_code doesn't carry over from L18.
+            Lookup how to resolve it. Once that's done, this page is basically done. -->
+            <td>
+                {% for rating in ratings %}
+                {{rating}}
+
+                {% endfor %}
+                {% endfor %}
+            </td>
+            
+        </tr>
+        </table>
+        </div>
 {% endblock %}

@@ -1,31 +1,44 @@
 """CRUD operations."""
 
 from model import db, User, Office, Rating, connect_to_db
+from datetime import datetime
 
 
 # Functions start here!
 
-def create_user(email_address, passcode):
+def create_user(username, passcode):
     """Create and return a new user."""
 
-    new_user = User(email=email_address, password=passcode)
+    username = User(username=username, password=passcode)
 
-    db.session.add(new_user)
+    db.session.add(username)
     db.session.commit()
 
-    return new_user
+    return username
     
 
-def create_office(name, location, coordinates):
+def create_office(name, location, latitude, longitude):
     """Create and return a new office."""
 
     new_office = Office(company_name=name, office_location=location, 
-    coordinates=coordinates)
+    office_latitude=latitude, office_longitude=longitude)
     
     db.session.add(new_office)
     db.session.commit()
 
     return new_office
+
+
+def create_rating(new_score, office_code, user_id):
+    """Create and return a new rating."""
+
+    new_rating = Rating(rating=new_score, office_code=office_code, user_id=user_id)
+
+    db.session.add(new_rating)
+    db.session.commit()
+
+    return new_rating
+
 
 def get_office():
     """Return all office."""
@@ -38,40 +51,51 @@ def get_users():
 
     return User.query.all()
 
+def get_ratings_by_office_code(code):
+    """Return ratings."""    
+
+# select office_code, created_at from ratings where office_code = '1' order by created_at desc limit 1;
+# How to pass back 
+    q=db.session.query(Rating.rating)
+    return q.filter_by(office_code=code).order_by('office_code').first()
+
+
+def get_timestamp_by_office_code(code):
+    """Return timestampe."""    
+
+# select office_code, created_at from ratings group by 1,2 order by created_at desc; Subquery to follow for the html part
+# How to pass back 
+    q=db.session.query(Rating.created_at)
+    return q.filter_by(office_code=code).order_by(code).first()
+
+
 def get_coordinates():
     """Return all coordinates."""
     
-    return db.session.query(Office.coordinates).all()
-
-# new_rating= (score='3', office='abc', user_id='2')
-
-def create_rating(new_score, current_office, user_id, created_at):
-    """Create and return a new rating."""
-
-    new_rating = Rating(score=new_score, office_code=current_office, user_id=user_id, created_at=created_at)
-
-    db.session.add(new_rating)
-    db.session.commit()
-
-    return new_rating
+    return db.session.query(Office.office_latitude, Office.office_longitude).all()
 
 
-def get_office_by_code(office_code):
-    """Get office ID."""
+def get_offices():
+    """Get offices."""
     
-    return Office.query.get(office_code)
+    return Office.query.all()
 
-def get_user_by_id(user_id):
-    """Get user by ID."""
+def get_userid(username):
+    """Get users."""
     
-    return User.query.get(user_id)
+    return db.session.query(User.user_id).filter(User.username==username).first()
 
 
-def get_user_by_email(email):
-    """Get user by email."""
+def get_user_match(username):
+    """Get username."""
     
-    return User.query.filter(User.email == email).first()
+    return db.session.query(User.username).filter(User.username==username).one()
 
+
+def get_password(username):
+    """Get password by username."""
+    
+    return db.session.query(User.password).filter(User.username==username).first()
 
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@
 <h1>Form</h1>
 <form action="/form" method="POST">
 <p>
-Hi, {{user_name}}! Your user_id is:{{user_id}}. 
+Hi, {{username}}! Your user_id is: {{user_id}}. 
 <br>
 Log in function needs to be figure out. 
 Let's log your company details:
@@ -26,11 +26,12 @@ office_latitude
 </p>
 <p>
 Back to the Office Status:
-    <input type="radio" name="back_to_office_status">0%
-    <input type="radio" name="back_to_office_status">20%
-    <input type="radio" name="back_to_office_status">40%
-    <input type="radio" name="back_to_office_status">60%
-    <input type="radio" name="back_to_office_status">100%
+    <input type="radio" name="rating" value='0'>0%
+    <input type="radio" name="rating" value='20'>20%
+    <input type="radio" name="rating" value='40'>40%
+    <input type="radio" name="rating" value='60'>60%
+    <input type="radio" name="rating" value='80'>80%
+    <input type="radio" name="rating" value='100'>100%
 </p>
 <p>
     Submit
