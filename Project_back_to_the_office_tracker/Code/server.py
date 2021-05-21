@@ -15,62 +15,80 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage."""
-
+    if "username" in session:
+        username=session['username']
+        flash(f'You have logged in as {username}!')
+    else:
+        flash('Welcome, Guest!')
     return render_template('homepage.html')
 
 
 @app.route('/about')
 def about():
     """Project goal"""
-
+    if "username" in session:
+        username=session['username']
+        flash(f'You have logged in as {username}!')
+    else:
+        flash('Welcome, Guest!')
     return render_template('about.html')
 
 
 @app.route('/form', methods=['POST', 'GET'])
 def form():
     """Input form"""
-
-    if "username" in session:
+    if 'username' not in session:
+        flash(f'Reminder: Please login/create an account!')
+        return redirect('/loginpage.html')
+    else:
         username=session['username']
         user_id=crud.get_userid(username)[0]
-        print('***********')
-        print(f'user_ID: {user_id}')
-        if request.method == 'GET':
+        flash(f'You have logged in as {username}!')
 
-            return render_template('form.html', username=username, user_id=user_id)
-        else:    
-            company_name=request.form.get('company_name')
-            office_location=request.form.get('office_location')
+    if request.method == 'GET':
+        return render_template('form.html', username=username, user_id=user_id)
 
-            rating=int(request.form['rating'])
-            # print('************')
-            # print(rating)
-            # print(type(rating))
-            # print('************')
-            coordinates=geocode(office_location)
-            office_latitude= coordinates[0]
-            office_longitude= coordinates[1]
+    else:    
+        company_name=request.form.get('company_name')
+        office_location=request.form.get('office_location')
+        rating=int(request.form['rating'])
+        # print('************')
+        # print(rating)
+        # print(type(rating))
+        # print('************')
+        coordinates=geocode(office_location)
+        office_latitude= coordinates[0]
+        office_longitude= coordinates[1]
+        cpname=crud.get_companyname(company_name)
 
-            # check if office exists
-            # create a function to get existing office_code or create a new one based on name and locatin
-            if:
-                # office doesn't exist: (create it)
-                crud.create_office(company_name, office_location, office_latitude, office_longitude)
+        if cpname:
+            pass
+        else:
+            # office_location != cpname.office_location
+            crud.create_office(company_name, office_location, office_latitude, office_longitude)
+            cpname=crud.get_companyname(company_name)
+
+            print('******************')
+            print(crud.create_office(company_name, office_location, office_latitude, office_longitude))
+        
+        office_code=cpname.office_code
+
+        
+        crud.create_rating(rating, office_code, user_id)
+        print('*******Completed******')
+        return render_template('thankyou.html')
             
-            office_code=crud.xxxxx 
-            crud.create_rating(rating, office_code, user_id)
-            print("username")
-            flash(f'You have logged in as {username}!')
-            # return render_template('thankyou.html', username=username, user_id=user_id)
-            return render_template('thankyou.html')
-            else:
-                flash(f'Please login/create an account!')
-                return render_template('loginpage.html')
+
 
 @app.route('/officeslist')
 def all_offices_list():
     """View all offices in a list."""
 
+    if "username" in session:
+        username=session['username']
+        flash(f'You have logged in as {username}!')
+    else:
+        flash('Welcome, Guest!')
     offices = crud.get_offices()
     ratings = crud.get_ratings_by_office_code('1') #how to change this argument to be dynamic coming from officeslist.html?
     # add the sql function here to convert to datetime
@@ -80,7 +98,11 @@ def all_offices_list():
 @app.route('/officesmap')
 def all_offices_map():
     """View all offices in a map."""
-
+    if "username" in session:
+        username=session['username']
+        flash(f'You have logged in as {username}!')
+    else:
+        flash('Welcome, Guest!')
     offices = crud.get_offices()
 
     return render_template('officesmap.html', offices=offices)
@@ -89,8 +111,18 @@ def all_offices_map():
 @app.route('/sample')
 def mapDisplay():
     """Map Display."""
-    coordinates= [(-74.014019, 40.709831)]
-    # result: [(-73.846739, 40.856809), (-74.014019, 40.709831)]
+    if "username" in session:
+        username=session['username']
+        flash(f'You have logged in as {username}!')
+    else:
+        flash('Welcome, Guest!')
+#     lat=coordinate[i][0]
+    # coordinates= crud.get_coordinates()
+    coordinates= [(-74.014019, 40.709831),(-122.014019, 37.4810185), (-120, 40), (-90,35)]
+    print('************')
+    print(coordinates)
+    print('************')
+    
     # What's the best way to pass the long and lat to the testing_map.html when the return is in a list? and 
     # list=[]
     # for i, coordinate in enumerate (coordinates):
@@ -109,6 +141,7 @@ def mapDisplay():
 @app.route('/users')
 def all_users():
     """View all users."""
+    
     users = crud.get_users()
 
     return render_template('all_users.html', users=users)
@@ -117,30 +150,42 @@ def all_users():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Login Page."""
-    if request.method == 'POST':  
+    # if "username" in session:
+    #     username=session['username']
+    #     flash(f'You have logged in as {username}!')
+    # else:
+    #     flash('Welcome, Guest!')
+    if request.method == 'POST':
         username=request.form.get('username')
-        session['username']=username
         password=request.form.get('password')
-        session['password']=password
-        db_username=crud.get_user_match(username)
-        print('*************')
-        print(f'db_username: {db_username[0]}')
-        db_password=crud.get_password(username)
-        print(f'db_password: {db_password[0]}')
-        print('*************')
-
-        # if username==db_username and password==db_password:
-
         
-        # else:
-        #     crud.create_user(username, password)
-        #     session['username'] = username
-        #     session['user_id'] = crud.get_user_id(session['username'])
-        #     flash(f'You have signup as {username}')
-        # flash(f'You have logged in as {username}!')
-        return redirect('/')
+        user = crud.get_user_by_username(username)
+
+        if user:
+            if password == user.password:
+                session['username'] = user.username
+                session['user_id'] = user.user_id
+                
+                username=session['username']
+                user_id=session['user_id']
+                
+                flash(f"Hello, {username}! \n You have been successfully logged in!")
+                return render_template('homepage.html', username=username, user_id=user_id)
+            else:
+                flash(f"Wrong password. Try again")
+                return render_template('loginpage.html')
+
+        else:
+            flash("Username doesn't exist. Try again or create an account")
+            return redirect('/')
+
     else:
         return render_template('loginpage.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 @app.route('/testing_map')
 def testing_map():
