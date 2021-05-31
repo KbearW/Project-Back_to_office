@@ -21,20 +21,14 @@
   });
 
   map.on('load', function () {
-    // var marker1 = new mapboxgl.Marker()
-    //     .setLngLat([-74.014019, 40.709831])
-    //     .addTo(map);
-    // new mapboxgl.Marker()0
-    //     .setLngLat([-122.014019, 37.4810185])
-    //     .addTo(map);
-
-    {% for coordinate in coordinates %}
-
-    new mapboxgl.Marker()
-        .setLngLat([{{coordinate[0]}}, {{coordinate[1]}}])
+    var marker1 = new mapboxgl.Marker()
+        .setLngLat([-74.014019, 40.709831])
         .addTo(map);
-          
-    {% endfor %}
+    new mapboxgl.Marker()
+        .setLngLat([-122.014019, 37.4810185])
+        .addTo(map);
+
+
   }
   );
 
@@ -42,4 +36,3 @@
 </script>
 
 {% endblock %}
-

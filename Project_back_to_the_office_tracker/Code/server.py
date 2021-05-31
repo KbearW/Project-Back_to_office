@@ -1,10 +1,12 @@
 """Server for back to the office tracker app."""
 
-from flask import (Flask, render_template, request, flash, session, redirect, url_for)
+from flask import (Flask, render_template, request, flash, session, redirect, url_for, jsonify)
 from model import connect_to_db, Office
 import crud
 from sample import geocode
 from jinja2 import StrictUndefined
+from json import dumps
+
 
 
 app = Flask(__name__)
@@ -39,7 +41,7 @@ def form():
     """Input form"""
     if 'username' not in session:
         flash(f'Reminder: Please login/create an account!')
-        return redirect('/loginpage.html')
+        return redirect('/login')
     else:
         username=session['username']
         user_id=crud.get_userid(username)[0]
@@ -57,8 +59,8 @@ def form():
         # print(type(rating))
         # print('************')
         coordinates=geocode(office_location)
-        office_latitude= coordinates[0]
-        office_longitude= coordinates[1]
+        office_latitude= coordinates[1]
+        office_longitude= coordinates[0]
         cpname=crud.get_companyname(company_name)
 
         if cpname:
@@ -67,12 +69,8 @@ def form():
             # office_location != cpname.office_location
             crud.create_office(company_name, office_location, office_latitude, office_longitude)
             cpname=crud.get_companyname(company_name)
-
-            print('******************')
-            print(crud.create_office(company_name, office_location, office_latitude, office_longitude))
         
         office_code=cpname.office_code
-
         
         crud.create_rating(rating, office_code, user_id)
         print('*******Completed******')
@@ -118,9 +116,12 @@ def mapDisplay():
         flash('Welcome, Guest!')
 #     lat=coordinate[i][0]
     # coordinates= crud.get_coordinates()
-    coordinates= [(-74.014019, 40.709831),(-122.014019, 37.4810185), (-120, 40), (-90,35)]
+    
     print('************')
-    print(coordinates)
+    data = jsonify(crud.get_all_office_rating())
+    # coordinates= [(-74.014019, 40.709831),(-122.014019, 37.4810185), (-120, 40), (-90,35)]
+    print('************')
+    print(data)
     print('************')
     
     # What's the best way to pass the long and lat to the testing_map.html when the return is in a list? and 
@@ -135,8 +136,13 @@ def mapDisplay():
     # office_longitude = crud.get_coordinates()[1]
     
     # return render_template('testing_map.html', office_latitude= office_latitude, office_longitude= office_longitude)
-    return render_template('testing_map.html', coordinates=coordinates)
+    # return render_template('testing_map.html', data=data)
+    return render_template('testing_map.html')
 
+@app.route('/sample2')
+def samplemap2():
+    data = jsonify(crud.get_all_office_rating())
+    return render_template('testing_map2.html', data = data)
 
 @app.route('/users')
 def all_users():
@@ -187,53 +193,97 @@ def logout():
     session.clear()
     return redirect('/')
 
+
 @app.route('/testing_map')
 def testing_map():
     """View homepage."""
+    coordinates = crud.get_map_data()
 
-    return render_template('testing_map.html')
+    return render_template('testing_map.html', coordinates=coordinates)
 
+@app.route('/sample3')
+def testing_map3():
+    """View homepage."""
+    
 
-# @app.route('/handle-login', methods=['POST'])
-# def handle_login():
-#     """Log user into application."""
+    return render_template('testing_map3.html')
 
-#     username = request.form['username']
-#     password = request.form['password']
+@app.route('/sample4')
+def testing_map4():
+    """View homepage."""
+    
 
-#     if password == 'let-me-in':   # FIXME
-#         session['current_user'] = username
-#         flash(f'Logged in as {username}')
-#         return redirect('/')
+    return render_template('testing_map4.html')
 
-#     else:
-#         flash('Wrong password!')
-#         return redirect('/login')
-
-# @app.route('/users', methods=['POST'])
-# def register_user():
-#     """Create a new user."""
-
-#     username = request.form.get('username')
-#     password = request.form.get('password')
-
-#     user = crud.get_user_by_username(username)
-#     if user:
-#         flash('Cannot create an account with that username. Try again.')
-#     else:
-#         crud.create_user(username, password)
-#         flash('Account created! Please log in.')
-
-#     return redirect('/')
+@app.route('/sample5')
+def testing_map5():
+    """View homepage."""
+    
+    return render_template('testing_map5.html')
 
 
-# @app.route('/users/<user_id>')
-# def show_user(user_id):
-#     """Show details on a particular user."""
+@app.route('/db_data.json')
+def db_data():
+    """Return db data dictionary."""
 
-#     user = crud.get_user_by_id(user_id)
+    all_offices = crud.get_all_office_rating()
+    
+    print('~~~~~~~~~~************~~~~~~~~~~')
+    print(all_offices)
+    
+    # return jsonify({'companyname': 'Trulia', 'companylocation': '535 Mission St. #700, San Francisco, CA 94105', 'coordinates':[37.7888897, -122.4068551],
+    # 'rating':60, 'last updated on': '5/27/2021'})
+    # return jsonify( {'1': {'company_name': 'Facebook', 
+    #                              'office_location': 'MPK 20 1 Facebook Way, Menlo Park, CA 94025', 
+    #                             'office_latitude': 37.4810185, 
+    #                             'office_longitude': -122.1550338},
+    #                 '2': {'company_name': 'Facebook', 
+    #                              'office_location': '923 Hamilton Ave, Menlo Park, CA 94025', 
+    #                             'office_latitude': 37.4810185, 
+    #                             'office_longitude': -122.1512711}
+    #                 })
+    return jsonify(all_offices)
 
-#     return render_template('user_details.html', user=user)
+    # @app.route('/handle-login', methods=['POST'])
+    # def handle_login():
+    #     """Log user into application."""
+
+    #     username = request.form['username']
+    #     password = request.form['password']
+
+    #     if password == 'let-me-in':   # FIXME
+    #         session['current_user'] = username
+    #         flash(f'Logged in as {username}')
+    #         return redirect('/')
+
+    #     else:
+    #         flash('Wrong password!')
+    #         return redirect('/login')
+
+    # @app.route('/users', methods=['POST'])
+    # def register_user():
+    #     """Create a new user."""
+
+    #     username = request.form.get('username')
+    #     password = request.form.get('password')
+
+    #     user = crud.get_user_by_username(username)
+    #     if user:
+    #         flash('Cannot create an account with that username. Try again.')
+    #     else:
+    #         crud.create_user(username, password)
+    #         flash('Account created! Please log in.')
+
+    #     return redirect('/')
+
+
+    # @app.route('/users/<user_id>')
+    # def show_user(user_id):
+    #     """Show details on a particular user."""
+
+    #     user = crud.get_user_by_id(user_id)
+
+    #     return render_template('user_details.html', user=user)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Add custom markers in Mapbox GL JS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
+
+    <style>
+    .marker {
+    background-image: url('static/mapbox-icon.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    }
+
+    .mapboxgl-popup {
+    max-width: 200px;
+    }
+
+    .mapboxgl-popup-content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    }
+
+
+
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmVhbmJhZzczOCIsImEiOiJja29rZ3d0aGIwMDh3MnBtMWp6dGcwMHVvIn0.prLY8xe96YLzfR5rBc8x3g';
+// var coor_fixed = [-122.1512711, 37.4810185];
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10',
+    center: [-96, 37.8],
+    zoom: 3
+});
+
+var geojson = {
+    type: 'FeatureCollection',
+    features: [{company_code: "1",
+                Coordinates_LngLat: [-122.1550338, 37.4810185], 
+                Office_info: {
+                    office_location: "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
+                    office_name: "Facebook"
+                }, 
+                Rating: {
+                    rating: 40, 
+                    timestamp: "Wed, 26 May 2021 21:57:53 GMT"
+                }
+                }, 
+                {company_code: "2",
+                Coordinates_LngLat: [-77.032, 38.913], 
+                Office_info: {
+                office_location: "DC", 
+                office_name: "ABC"
+                    }, 
+                Rating: {
+                rating: 80, 
+                timestamp: "Wed, 26 May 2021 21:57:53 GMT"
+                    }
+                }
+    ]
+};
+
+    // """Goal for this page is to display all the json points on the map...
+    // issue here, 1.) need help on linking the json page to here rather than inline json from above
+    // 2.) need help w JS loop since I can display two points on map..."""
+    
+
+    // add markers to map
+    geojson.features.forEach(function(marker) {
+        // """This section of code works but doesn't work in a loop... in the next section..."""
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // // create DOM element for the marker
+        // var el = document.createElement('div');
+        // el.id = 'marker';
+        new mapboxgl.Marker(el)
+        .setLngLat(geojson.features[1]['Coordinates_LngLat'])
+        //create a popup
+        .setPopup(
+            // add popups
+            new mapboxgl.Popup({ offset:25 }) 
+                .setHTML(
+                    '<h3>'+ geojson.features[1]['Office_info']['office_name'] +'</h3><p>' +
+                    "Back to the office rating: " + geojson.features[1]['Rating']['rating'] +"%" + '<p>'+ 
+                    "Latest timestamp:" + " "+ geojson.features[1]['Rating']['timestamp']
+                    )
+        )
+        .addTo(map)
+                    }),
+
+        // add markers to map
+        geojson.features.forEach(function(marker) {
+        // """This section of code works but doesn't work in a loop... in the next section..."""
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        // // create DOM element for the marker
+        // var el = document.createElement('div');
+        // el.id = 'marker';
+        new mapboxgl.Marker(el)
+        .setLngLat(geojson.features[0]['Coordinates_LngLat'])
+        //create a popup
+        .setPopup(
+            // add popups
+            new mapboxgl.Popup({ offset:25 }) 
+                .setHTML(
+                    '<h3>'+ geojson.features[0]['Office_info']['office_name'] +'</h3><p>' +
+                    "Back to the office rating: " + geojson.features[0]['Rating']['rating'] +"%" + '<p>'+ 
+                    "Latest timestamp:" + " "+ geojson.features[0]['Rating']['timestamp']
+                    )
+        )
+        .addTo(map)
+                    })
+                    ;
+
+    // """This doesn't work"""
+        // for(var i = 0; i<geojson.length; i++){
+
+        // // add markers to map
+        // geojson.features.forEach(function(marker) {
+        // // """This section of code works but doesn't work in a loop... in the next section..."""
+        // // create a HTML element for each feature
+        // var el = document.createElement('div');
+        // el.className = 'marker';
+
+        // // create DOM element for the marker
+        // var el = document.createElement('div');
+        // el.id = 'marker';
+        // new mapboxgl.Marker(el)
+        // .setLngLat(geojson.features[i]['Coordinates_LngLat'])
+        // //create a popup
+        // .setPopup(
+        //     // add popups
+        //     new mapboxgl.Popup({ offset:25 }) 
+        //         .setHTML(
+        //             '<h3>'+ geojson.features[i]['Office_info']['office_name'] +'</h3><p>' +
+        //             "Back to the office rating: " + geojson.features[i]['Rating']['rating'] +"%" + '<p>'+ 
+        //             "Latest timestamp:" + " "+ geojson.features[i]['Rating']['timestamp']
+        //             )
+        // )
+        // .addTo(map)
+        //             });
+        // }
+
+
+</script>
+
+</body>
+</html>

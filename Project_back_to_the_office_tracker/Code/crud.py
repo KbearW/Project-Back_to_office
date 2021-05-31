@@ -2,6 +2,7 @@
 
 from model import db, User, Office, Rating, connect_to_db
 from datetime import datetime
+from flask import jsonify
 
 
 # Functions start here!
@@ -21,7 +22,7 @@ def create_office(name, location, latitude, longitude):
     """Create and return a new office."""
 
     new_office = Office(company_name=name, office_location=location, 
-    office_latitude=latitude, office_longitude=longitude)
+    office_longitude=longitude, office_latitude=latitude)
     
     db.session.add(new_office)
     db.session.commit()
@@ -82,11 +83,55 @@ def get_timestamp_by_office_code(code):
     return q.filter_by(office_code=code).order_by(code).first()
 
 
-def get_coordinates():
+def get_office_data():
     """Return all coordinates."""
     
-    return Office.query.all()
+    # for each office, retrive the most recent rating per office- use n query
+    all_offices = db.session.query(Office.company_name, Office.office_location, Office.office_latitude, Office.office_longitude).all()
 
+    return all_offices
+
+def get_rating_info(office_code):
+    """Get rating info."""
+
+    rating_by_company_code = db.session.query( Rating.rating, Rating.created_at).filter_by(office_code=office_code)
+    latest_rating = rating_by_company_code.order_by(Rating.created_at.desc()).first()
+    return {"rating":latest_rating[0], "timestamp": latest_rating[1]}
+
+
+def get_all_office_rating():
+    """ Get all office ratings"""
+    result = {}
+    all_offices = Office.query.all()
+    
+    for office in all_offices:
+        result[office.office_code]=        {
+            "Rating": get_rating_info(office.office_code), 
+            "Office_info": {
+                "office_name": office.company_name, 
+                "office_location": office.office_location
+            },
+            "Coordinates (LngLat)": (
+                office.office_longitude, office.office_latitude)
+            }
+
+        
+        
+    return result
+
+
+def get_map_data():
+    """combine get_office_data() and get_rating_info() into one function for jsonify."""
+    
+    office_data = get_office_data()
+    # Q: how to combine the two functions?
+    # Sudo Code:
+    # 
+
+    # for loop
+    # result = 
+    
+    return office_data
 
 def get_companyname(companyname):
     """Get offices."""
@@ -111,6 +156,7 @@ def get_user_by_username(username):
     # user_lookup=all_users.filter(User.username==username)
     return User.query.filter(User.username == username).first()
     # return user_lookup.first()
+
 
 
 if __name__ == '__main__':
