@@ -101,20 +101,52 @@ def get_rating_info(office_code):
 
 def get_all_office_rating():
     """ Get all office ratings"""
-    result = {}
+    result = {"type": "FeatureCollection",
+                    "features": [
+                        { 
+                            "type": "Feature"}
+                        ]
+            }
+    listOfData = list()
     all_offices = Office.query.all()
     
     for office in all_offices:
-        result[office.office_code]=        {
-            "Rating": get_rating_info(office.office_code), 
-            "Office_info": {
-                "office_name": office.company_name, 
-                "office_location": office.office_location
-            },
-            "Coordinates (LngLat)": (
-                office.office_longitude, office.office_latitude)
-            }
+        data = {
+            "id": office.office_code,
+            "office_location": office.office_location,
+            "office_name": office.company_name, 
+            "rating": get_rating_info(office.office_code)["rating"], 
+            "timestamp": get_rating_info(office.office_code)["timestamp"],
+            "geometry": 
+                                {
+                                    "type": "Point", 
+                                    "coordinates": [
+                office.office_longitude, office.office_latitude]
+            }}
+        listOfData.append(data)
 
+    result["features"][0]['properties']= listOfData
+    print(result)
+                    
+                    # "type": "FeatureCollection",
+                    # "features": [
+                    #     { 
+                    #         "type": "Feature", 
+                    #         "properties": 
+                    #             {
+                    #                 "id": office.office_code, 
+                    #                 "office_location": office.office_location, 
+                    #                 "office_name": office.company_name,
+                    #                 "rating": get_rating_info(office.office_code), 
+                    #                 "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
+                    #             }, 
+                    #         "geometry": 
+                    #             {
+                    #                 "type": "Point", 
+                    #                 "coordinates": 
+                    #                 [office.office_longitude, office.office_latitude] 
+                    #             } 
+                    #     }
         
         
     return result
