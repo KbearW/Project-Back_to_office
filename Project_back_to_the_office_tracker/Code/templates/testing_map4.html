@@ -67,6 +67,23 @@ cursor: pointer;
                             "properties": 
                                 {
                                     "id": "2", 
+                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
+                                    "office_name": "Facebook",
+                                    "rating": 40, 
+                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
+                                }, 
+                            "geometry": 
+                                {
+                                    "type": "Point", 
+                                    "coordinates": 
+                                    [-122.1550338, 37.4810185] 
+                                } 
+                        },
+                        { 
+                            "type": "Feature", 
+                            "properties": 
+                                {
+                                    "id": "3", 
                                     "office_location": "923 Hamilton Ave, Menlo Park, CA 94025", 
                                     "office_name": "ABC",
                                     "rating": 80, 
@@ -80,6 +97,8 @@ cursor: pointer;
                                 } 
                         }
                     ]};
+
+
 
     map.addControl(new mapboxgl.NavigationControl());
     
@@ -109,6 +128,7 @@ cursor: pointer;
                 'rating5': ['+', ['case', rating5, 1, 0]]
             }
         });
+        
 
     // circle and symbol layers for rendering individual office (unclustered points)
     map.addLayer({
@@ -165,8 +185,8 @@ cursor: pointer;
     function updateMarkers() {
         var newMarkers = {};
         var features = map.querySourceFeatures('backtooffices');
-        console.log('!!!!!!!')
-        console.log(features)
+        // console.log('!!!!!!!')
+        // console.log(features)
         // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
         // and add it to the map if it's not there already
         for (var i = 0; i < features.length; i++) {
@@ -214,6 +234,7 @@ cursor: pointer;
         updateMarkers();
     });
     });
+
     
     // code for creating an SVG donut chart from feature properties
     function createDonutChart(props) {
@@ -324,6 +345,59 @@ cursor: pointer;
 </html>
 
 <!-- 
+
+
+    // var geojson = '/localhost:5000/db_data.json'
+        // var geojson = {'type': 'FeatureCollection', 
+        //                 'features': [
+        //                     {
+        //                         'type': 'Feature', 
+        //                         'properties': [ //list turn this unreadable...
+        //                             {
+        //                                 'id': 1, 
+        //                                 'office_location': 'MPK 20 1 Facebook Way, Menlo Park, CA 94025', 
+        //                                 'office_name': 'Facebook', 
+        //                                 'rating': 40, 
+        //                                 'timestamp': datetime.datetime(2021, 5, 26, 21, 57, 53, 214465), 
+        //                                 'geometry': {'type': 'Point', 'coordinates': [-122.1550338, 37.4810185]}
+        //                             }, 
+        //                             {
+        //                                 'id': 2, 'office_location': '923 Hamilton Ave, Menlo Park, CA 94025', 
+        //                                 'office_name': 'Facebook', 
+        //                                 'rating': 80, 
+        //                                 'timestamp': datetime.datetime(2021, 5, 26, 21, 57, 53, 214465), 
+        //                                 'geometry': {'type': 'Point', 'coordinates': [-122.1512711, 37.4810185]}
+        //                             }, 
+        //                             {  
+        //                                 'id': 3, 
+        //                                 'office_location': '185 Berry St #5000, San Francisco, CA 94107', 
+        //                                 'office_name': 'Lyft', 
+        //                                 'rating': 100, 
+        //                                 'timestamp': datetime.datetime(2021, 5, 28, 0, 10, 44, 157032), 
+        //                                 'geometry': {'type': 'Point', 'coordinates': [-122.5321531, 37.7765663]}
+        //                             }, 
+        //                             {
+        //                                 'id': 4, 
+        //                                 'office_location': '1455 Market St #400, San Francisco, CA 94103', 
+        //                                 'office_name': 'Uber', 
+        //                                 'rating': 20, 
+        //                                 'timestamp': datetime.datetime(2021, 5, 26, 21, 57, 53, 214465), 
+        //                                 'geometry': {'type': 'Point', 'coordinates': [-122.4331198, 37.7888842]}
+        //                             }, 
+        //                             {
+        //                                 'id': 5, 
+        //                                 'office_location': '535 Mission St. #700, San Francisco, CA 94105', 
+        //                                 'office_name': 'Trulia', 
+        //                                 'rating': 20, 
+        //                                 'timestamp': datetime.datetime(2021, 5, 26, 21, 57, 53, 214465), 
+        //                                 'geometry': {'type': 'Point', 'coordinates': [-122.4068551, 37.7888897]}
+        //                             }, 
+        //                         ]
+        //                     }
+        //                 ]
+        //             };
+
+
 {
     "type": 'FeatureCollection',
     "features": [{"type": "Feature",

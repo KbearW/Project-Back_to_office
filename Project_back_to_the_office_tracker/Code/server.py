@@ -117,32 +117,21 @@ def mapDisplay():
 #     lat=coordinate[i][0]
     # coordinates= crud.get_coordinates()
     
-    print('************')
+    # print('************')
     data = jsonify(crud.get_all_office_rating())
     # coordinates= [(-74.014019, 40.709831),(-122.014019, 37.4810185), (-120, 40), (-90,35)]
-    print('************')
-    print(data)
-    print('************')
+    # print('************')
+    # print(data)
+    # print('************')
     
-    # What's the best way to pass the long and lat to the testing_map.html when the return is in a list? and 
-    # list=[]
-    # for i, coordinate in enumerate (coordinates):
-    #     lat=coordinate[i][0]
-    #     long=coordinate[i][1]
-    #     list.append(lat)
-
-
-    # office_latitude = crud.get_coordinates()[0]
-    # office_longitude = crud.get_coordinates()[1]
-    
-    # return render_template('testing_map.html', office_latitude= office_latitude, office_longitude= office_longitude)
-    # return render_template('testing_map.html', data=data)
     return render_template('testing_map.html')
+
 
 @app.route('/sample2')
 def samplemap2():
     data = jsonify(crud.get_all_office_rating())
     return render_template('testing_map2.html', data = data)
+
 
 @app.route('/users')
 def all_users():
@@ -221,6 +210,18 @@ def testing_map5():
     
     return render_template('testing_map5.html')
 
+@app.route('/sample6')
+def testing_map6():
+    """View homepage."""
+    
+    return render_template('testing_map6.html')
+
+@app.route('/sample7')
+def testing_map7():
+    """View homepage."""
+    
+    return render_template('testing_map7-just_cluster.html')
+
 
 @app.route('/db_data.json')
 def db_data():
@@ -231,17 +232,6 @@ def db_data():
     print('~~~~~~~~~~************~~~~~~~~~~')
     print(all_offices)
     
-    # return jsonify({'companyname': 'Trulia', 'companylocation': '535 Mission St. #700, San Francisco, CA 94105', 'coordinates':[37.7888897, -122.4068551],
-    # 'rating':60, 'last updated on': '5/27/2021'})
-    # return jsonify( {'1': {'company_name': 'Facebook', 
-    #                              'office_location': 'MPK 20 1 Facebook Way, Menlo Park, CA 94025', 
-    #                             'office_latitude': 37.4810185, 
-    #                             'office_longitude': -122.1550338},
-    #                 '2': {'company_name': 'Facebook', 
-    #                              'office_location': '923 Hamilton Ave, Menlo Park, CA 94025', 
-    #                             'office_latitude': 37.4810185, 
-    #                             'office_longitude': -122.1512711}
-    #                 })
     return jsonify(all_offices)
 
     # @app.route('/handle-login', methods=['POST'])

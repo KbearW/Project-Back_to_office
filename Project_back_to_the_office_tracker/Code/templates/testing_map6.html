@@ -19,110 +19,54 @@ body { margin: 0; padding: 0; }
 var map = new mapboxgl.Map({
 container: 'map',
 zoom: 0.3,
-center: [-96, 37.8],
+center: [0, 20],
 style: 'mapbox://styles/mapbox/light-v10'
 });
  
 map.addControl(new mapboxgl.NavigationControl());
  
 // filters for classifying earthquakes into five categories based on magnitude
-var rating1 = ['<', ['get', 'rating'], 0];
-var rating2 = ['all', ['>=', ['get', 'rating'], 20], ['<', ['get', 'rating'], 40]];
-var rating3 = ['all', ['>=', ['get', 'rating'], 60]];
-var rating4 = ['all', ['>=', ['get', 'rating'], 80]];
-var rating5 = ['>=', ['get', 'rating'], 100];
+var mag1 = ['<', ['get', 'mag'], 2];
+var mag2 = ['all', ['>=', ['get', 'mag'], 2], ['<', ['get', 'mag'], 3]];
+var mag3 = ['all', ['>=', ['get', 'mag'], 3], ['<', ['get', 'mag'], 4]];
+var mag4 = ['all', ['>=', ['get', 'mag'], 4], ['<', ['get', 'mag'], 5]];
+var mag5 = ['>=', ['get', 'mag'], 5];
  
 // colors to use for the categories
 var colors = ['#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c'];
  
-var geojson = {
-                    "type": "FeatureCollection",
-                    "features": [
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "1", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.1550338, 37.4810185] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "2", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.1550338, 37.4810185] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "3", 
-                                    "office_location": "923 Hamilton Ave, Menlo Park, CA 94025", 
-                                    "office_name": "ABC",
-                                    "rating": 80, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                },
-                            "geometry": 
-                                {
-                                    "type": "Point",
-                                    "coordinates": 
-                                    [-77.032, 38.913]
-                                } 
-                        }
-                    ]};
-
 map.on('load', function () {
-// add a clustered GeoJSON source for a sample set of backtooffices
-map.addSource('backtooffices', {
+// add a clustered GeoJSON source for a sample set of earthquakes
+map.addSource('earthquakes', {
 'type': 'geojson',
-'data': geojson,
+'data': 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
 'cluster': true,
 'clusterRadius': 80,
 'clusterProperties': {
 // keep separate counts for each magnitude category in a cluster
-'rating1': ['+', ['case', rating1, 1, 0]],
-'rating2': ['+', ['case', rating2, 1, 0]],
-'rating3': ['+', ['case', rating3, 1, 0]],
-'rating4': ['+', ['case', rating4, 1, 0]],
-'rating5': ['+', ['case', rating5, 1, 0]]
+'mag1': ['+', ['case', mag1, 1, 0]],
+'mag2': ['+', ['case', mag2, 1, 0]],
+'mag3': ['+', ['case', mag3, 1, 0]],
+'mag4': ['+', ['case', mag4, 1, 0]],
+'mag5': ['+', ['case', mag5, 1, 0]]
 }
 });
-// circle and symbol layers for rendering individual backtooffices (unclustered points)
+// circle and symbol layers for rendering individual earthquakes (unclustered points)
 map.addLayer({
-'id': 'location_circle',
+'id': 'earthquake_circle',
 'type': 'circle',
-'source': 'backtooffices',
+'source': 'earthquakes',
 'filter': ['!=', 'cluster', true],
 'paint': {
 'circle-color': [
 'case',
-rating1,
+mag1,
 colors[0],
-rating2,
+mag2,
 colors[1],
-rating3,
+mag3,
 colors[2],
-rating4,
+mag4,
 colors[3],
 colors[4]
 ],
@@ -131,14 +75,14 @@ colors[4]
 }
 });
 map.addLayer({
-'id': 'backtooffices_label',
+'id': 'earthquake_label',
 'type': 'symbol',
-'source': 'backtooffices',
+'source': 'earthquakes',
 'filter': ['!=', 'cluster', true],
 'layout': {
 'text-field': [
 'number-format',
-['get', 'rating'],
+['get', 'mag'],
 { 'min-fraction-digits': 1, 'max-fraction-digits': 1 }
 ],
 'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
@@ -147,7 +91,7 @@ map.addLayer({
 'paint': {
 'text-color': [
 'case',
-['<', ['get', 'rating'], 3],
+['<', ['get', 'mag'], 3],
 'black',
 'white'
 ]
@@ -160,7 +104,7 @@ var markersOnScreen = {};
  
 function updateMarkers() {
 var newMarkers = {};
-var features = map.querySourceFeatures('backtooffices');
+var features = map.querySourceFeatures('earthquakes');
 console.log(features)
 // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
 // and add it to the map if it's not there already
@@ -169,7 +113,7 @@ var coords = features[i].geometry.coordinates;
 var props = features[i].properties;
 
 if (!props.cluster) continue;
-var id = props.id;
+var id = props.cluster_id;
 
 var marker = markers[id];
 
@@ -184,6 +128,13 @@ newMarkers[id] = marker;
 if (!markersOnScreen[id]) marker.addTo(map);
 }
 
+console.log('~~~~~~')
+console.log('props is:')
+console.log(props)
+console.log('id is:')
+console.log(id)
+console.log('marker is:')
+console.log(marker)
 
 // for every marker we've added previously, remove those that are no longer visible
 for (id in markersOnScreen) {
@@ -194,7 +145,7 @@ markersOnScreen = newMarkers;
  
 // after the GeoJSON data is loaded, update markers on the screen on every frame
 map.on('render', function () {
-if (!map.isSourceLoaded('backtooffices')) return;
+if (!map.isSourceLoaded('earthquakes')) return;
 updateMarkers();
 });
 });
@@ -203,11 +154,11 @@ updateMarkers();
 function createDonutChart(props) {
 var offsets = [];
 var counts = [
-props.rating1,
-props.rating2,
-props.rating3,
-props.rating4,
-props.rating5
+props.mag1,
+props.mag2,
+props.mag3,
+props.mag4,
+props.mag5
 ];
 var total = 0;
 for (var i = 0; i < counts.length; i++) {

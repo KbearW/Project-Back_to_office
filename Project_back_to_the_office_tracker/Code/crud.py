@@ -56,15 +56,6 @@ def get_users():
     return User.query.all()
 
 
-def get_ratings_by_office_code(code):
-    """Return ratings.""" - WIP   
-
-    # select office_code, created_at from ratings where office_code = '1' order by created_at desc limit 1;
-    # How to pass back 
-    q=db.session.query(Rating.rating)
-    return q.filter_by(office_code=code).order_by('office_code').first()
-
-
 def get_office_code(companyname, officelocation):
     """Return the office code.""" 
 
@@ -72,15 +63,6 @@ def get_office_code(companyname, officelocation):
     just_co=all_office_code.filter(Office.company_name == companyname, Office.office_location == officelocation)
 
     return just_co.first()[0]
-
-
-def get_timestamp_by_office_code(code):
-    """Return timestampe."""  -WIP  
-
-    # select office_code, created_at from ratings group by 1,2 order by created_at desc; Subquery to follow for the html part
-    # How to pass back 
-    q=db.session.query(Rating.created_at)
-    return q.filter_by(office_code=code).order_by(code).first()
 
 
 def get_office_data():
@@ -107,6 +89,8 @@ def get_all_office_rating():
                             "type": "Feature"}
                         ]
             }
+    # Having a hard time converting this to map4's geojson format
+
     listOfData = list()
     all_offices = Office.query.all()
     
@@ -117,38 +101,18 @@ def get_all_office_rating():
             "office_name": office.company_name, 
             "rating": get_rating_info(office.office_code)["rating"], 
             "timestamp": get_rating_info(office.office_code)["timestamp"],
-            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": [
+        },
+        geodata = {
+                "type": "Point", 
+                "coordinates": [
                 office.office_longitude, office.office_latitude]
-            }}
-        listOfData.append(data)
+            }
+        # listOfData.append(data, geodata)
 
-    result["features"][0]['properties']= listOfData
-    print(result)
+        result["features"][0]['properties']= data
+        result["features"][0]['geometry']= geodata
+        print(result)
                     
-                    # "type": "FeatureCollection",
-                    # "features": [
-                    #     { 
-                    #         "type": "Feature", 
-                    #         "properties": 
-                    #             {
-                    #                 "id": office.office_code, 
-                    #                 "office_location": office.office_location, 
-                    #                 "office_name": office.company_name,
-                    #                 "rating": get_rating_info(office.office_code), 
-                    #                 "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                    #             }, 
-                    #         "geometry": 
-                    #             {
-                    #                 "type": "Point", 
-                    #                 "coordinates": 
-                    #                 [office.office_longitude, office.office_latitude] 
-                    #             } 
-                    #     }
-        
-        
     return result
 
 
@@ -164,6 +128,7 @@ def get_map_data():
     # result = 
     
     return office_data
+
 
 def get_companyname(companyname):
     """Get offices."""
