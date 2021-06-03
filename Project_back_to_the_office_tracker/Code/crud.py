@@ -84,33 +84,25 @@ def get_rating_info(office_code):
 def get_all_office_rating():
     """ Get all office ratings"""
     result = {"type": "FeatureCollection",
-                    "features": [
-                        { 
-                            "type": "Feature"}
-                        ]
+                    "features": []
             }
-    # Having a hard time converting this to map4's geojson format
 
-    listOfData = list()
     all_offices = Office.query.all()
     
     for office in all_offices:
-        data = {
-            "id": office.office_code,
-            "office_location": office.office_location,
-            "office_name": office.company_name, 
-            "rating": get_rating_info(office.office_code)["rating"], 
-            "timestamp": get_rating_info(office.office_code)["timestamp"],
-        },
-        geodata = {
-                "type": "Point", 
-                "coordinates": [
-                office.office_longitude, office.office_latitude]
-            }
-        # listOfData.append(data, geodata)
+        feature = {"type": "Feature", 
+            "properties":{
+                    "id": office.office_code,
+                    "office_location": office.office_location,
+                    "office_name": office.company_name, 
+                    "rating": get_rating_info(office.office_code)["rating"], 
+                    "timestamp": get_rating_info(office.office_code)["timestamp"],
+            }, 
+            "geometry": {"type": "Point", 
+                        "coordinates": [
+                        office.office_longitude, office.office_latitude]}}
 
-        result["features"][0]['properties']= data
-        result["features"][0]['geometry']= geodata
+        result["features"].append(feature)
         print(result)
                     
     return result

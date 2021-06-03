@@ -9,30 +9,46 @@ A list of all available data so far...
 
 <table>
     <tr>
-        <th>Company Name</th>
-        <th># of Ratings</th>
+        <th>Company_id</th>
+        <th>Company_name</th>
+        <th>Office_location</th>
+        <th>Ratings</th>
         <th>Latest Update</th>
     </tr>
         
+    <!-- {{officesData}}
+    <p>
+    ~~~~~~~~~~~~~~~~
+    </p>
+    {{officesData.features[0]['properties']}}
+    <p>
+    Office_id: {{officesData.features[0]['properties']['id']}}
+    </p>
+    Office_name: {{officesData.features[0]['properties']['office_name']}}
+    
+    <p>Office_location: {{officesData.features[0]['properties']['office_location']}} </p>
 
-    {% for office in offices %}
-        <tr>
-            <td> {{office.office_code}}</td>
-            <td><a href="{{ office.company_name }}">{{office.company_name}}</a></td>
-            <td>{{ office.office_location }}</td>
-            
+    Rating: {{officesData.features[0]['properties']['rating']}}
 
-            <!-- This issue here is that L27's office_code doesn't carry over from L18.
-            Lookup how to resolve it. Once that's done, this page is basically done. -->
-            <td>
-                {% for rating in ratings %}
-                {{rating}}
+    <p>Last updated on: {{officesData.features[0]['properties']['timestamp']}} </p>
+    <p>
+        ~~~~~~~~~~~~~~~~
+        </p> -->
+    <tbody>
+    <tr>
+    {% for office in officesData.features %}
 
-                {% endfor %}
-                {% endfor %}
-            </td>
-            
-        </tr>
-        </table>
-        </div>
+    <th>{{office['properties']['id']}}</th>
+    <th>{{office['properties']['office_name']}}</th>
+    <th>{{office['properties']['office_location']}}</th>
+    <th>{{office['properties']['rating']}}</th>
+    <th>{{office['properties']['timestamp'].strftime("%x")}}</th>
+    </tr>
+    {% endfor %}
+
+
+</tbody>
+</tr>
+</table>
+</div>
 {% endblock %}

@@ -25,63 +25,65 @@ body { margin: 0; padding: 0; }
 
     map.addControl(new mapboxgl.NavigationControl());
 
-    var geojson = {
-                    "type": "FeatureCollection",
-                    "features": [
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "1", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.1550338, 37.4810185] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "2", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.2, 38] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "3", 
-                                    "office_location": "923 Hamilton Ave, Menlo Park, CA 94025", 
-                                    "office_name": "ABC",
-                                    "rating": 80, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                },
-                            "geometry": 
-                                {
-                                    "type": "Point",
-                                    "coordinates": 
-                                    [-77.032, 38.913]
-                                } 
-                        }
-                    ]};
+    // var geojson = {
+    //                 "type": "FeatureCollection",
+    //                 "features": [
+    //                     { 
+    //                         "type": "Feature", 
+    //                         "properties": 
+    //                             {
+    //                                 "id": "1", 
+    //                                 "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
+    //                                 "office_name": "Facebook",
+    //                                 "rating": 40, 
+    //                                 "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
+    //                             }, 
+    //                         "geometry": 
+    //                             {
+    //                                 "type": "Point", 
+    //                                 "coordinates": 
+    //                                 [-122.1550338, 37.4810185] 
+    //                             } 
+    //                     },
+    //                     { 
+    //                         "type": "Feature", 
+    //                         "properties": 
+    //                             {
+    //                                 "id": "2", 
+    //                                 "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
+    //                                 "office_name": "Facebook",
+    //                                 "rating": 40, 
+    //                                 "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
+    //                             }, 
+    //                         "geometry": 
+    //                             {
+    //                                 "type": "Point", 
+    //                                 "coordinates": 
+    //                                 [-122.2, 37.4810185] 
+    //                             } 
+    //                     },
+    //                     { 
+    //                         "type": "Feature", 
+    //                         "properties": 
+    //                             {
+    //                                 "id": "3", 
+    //                                 "office_location": "923 Hamilton Ave, Menlo Park, CA 94025", 
+    //                                 "office_name": "ABC",
+    //                                 "rating": 80, 
+    //                                 "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
+    //                             },
+    //                         "geometry": 
+    //                             {
+    //                                 "type": "Point",
+    //                                 "coordinates": 
+    //                                 [-77.032, 38.913]
+    //                             } 
+    //                     }
+    //                 ]};
+
 
     map.on('load', function () {
+        // console.log(geojson)
         // Add a new source from our GeoJSON data and
         // set the 'cluster' option to true. GL-JS will
         // add the point_count property to your source data.
@@ -89,7 +91,7 @@ body { margin: 0; padding: 0; }
             type: 'geojson',
             // Point to GeoJSON data. This example visualizes all M1.0+ backtooffices
             // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
-            data: geojson,
+            data: '/db_data.json',
             cluster: true,
             clusterMaxZoom: 5, // Max zoom to cluster points on
             clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -178,13 +180,6 @@ body { margin: 0; padding: 0; }
         map.on('click', 'unclustered-point', function (e) {
             var coordinates = e.features[0].geometry.coordinates.slice();
             var rating = e.features[0].properties.rating;
-            var tsunami;
-
-            if (e.features[0].properties.tsunami === 1) {
-                tsunami = 'yes';
-            } else {
-                tsunami = 'no';
-            }
 
             // Ensure that if the map is zoomed out such that
             // multiple copies of the feature are visible, the

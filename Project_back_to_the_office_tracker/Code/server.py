@@ -87,10 +87,10 @@ def all_offices_list():
         flash(f'You have logged in as {username}!')
     else:
         flash('Welcome, Guest!')
-    offices = crud.get_offices()
-    ratings = crud.get_ratings_by_office_code('1') #how to change this argument to be dynamic coming from officeslist.html?
-    # add the sql function here to convert to datetime
-    return render_template('officeslist.html', offices=offices, ratings=ratings)
+    officesData = crud.get_all_office_rating()
+
+
+    return render_template('officeslist.html', officesData = officesData)
     
 
 @app.route('/officesmap')
@@ -200,9 +200,10 @@ def testing_map3():
 @app.route('/sample4')
 def testing_map4():
     """View homepage."""
-    
+    geojson = crud.get_all_office_rating()
 
-    return render_template('testing_map4.html')
+
+    return render_template('testing_map4.html', geojson=geojson)
 
 @app.route('/sample5')
 def testing_map5():
@@ -219,7 +220,7 @@ def testing_map6():
 @app.route('/sample7')
 def testing_map7():
     """View homepage."""
-    
+
     return render_template('testing_map7-just_cluster.html')
 
 
