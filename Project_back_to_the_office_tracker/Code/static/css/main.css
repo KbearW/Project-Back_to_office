@@ -1,6 +1,7 @@
 body {
     margin: 50;
     font-family:sans-serif ;
+    margin: 0; padding: 0; 
 }
 table, th, td {
   border: 1px solid grey;

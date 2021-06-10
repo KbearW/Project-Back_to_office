@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<h1>Create a mew account!</h1>
+<h1>(Add in DOM to check input)</h1>
+
+
+<form action="/signup" method="POST">
+
+<ul>
+    <p>
+    User Name:
+<input type="text" name="username">
+</p>
+<p>
+    Password:
+<input type="text" name="password">
+</p>
+<p>
+    Submit
+    <input type="submit">
+</p>
+</ul>
+{% endblock %}
+

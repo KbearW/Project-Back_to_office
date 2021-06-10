@@ -40,8 +40,9 @@ def about():
 def form():
     """Input form"""
     if 'username' not in session:
-        flash(f'Reminder: Please login/create an account!')
-        return redirect('/login')
+        username = 'Anonymous'
+        user_id = '1'
+        pass
     else:
         username=session['username']
         user_id=crud.get_userid(username)[0]
@@ -54,10 +55,6 @@ def form():
         company_name=request.form.get('company_name')
         office_location=request.form.get('office_location')
         rating=int(request.form['rating'])
-        # print('************')
-        # print(rating)
-        # print(type(rating))
-        # print('************')
         coordinates=geocode(office_location)
         office_latitude= coordinates[1]
         office_longitude= coordinates[0]
@@ -77,7 +74,6 @@ def form():
         return render_template('thankyou.html')
             
 
-
 @app.route('/officeslist')
 def all_offices_list():
     """View all offices in a list."""
@@ -88,25 +84,10 @@ def all_offices_list():
     else:
         flash('Welcome, Guest!')
     officesData = crud.get_all_office_rating()
-
-
     return render_template('officeslist.html', officesData = officesData)
     
 
 @app.route('/officesmap')
-def all_offices_map():
-    """View all offices in a map."""
-    if "username" in session:
-        username=session['username']
-        flash(f'You have logged in as {username}!')
-    else:
-        flash('Welcome, Guest!')
-    offices = crud.get_offices()
-
-    return render_template('officesmap.html', offices=offices)
-
-
-@app.route('/sample')
 def mapDisplay():
     """Map Display."""
     if "username" in session:
@@ -114,29 +95,13 @@ def mapDisplay():
         flash(f'You have logged in as {username}!')
     else:
         flash('Welcome, Guest!')
-#     lat=coordinate[i][0]
-    # coordinates= crud.get_coordinates()
-    
-    # print('************')
-    data = jsonify(crud.get_all_office_rating())
-    # coordinates= [(-74.014019, 40.709831),(-122.014019, 37.4810185), (-120, 40), (-90,35)]
-    # print('************')
-    # print(data)
-    # print('************')
-    
-    return render_template('testing_map.html')
 
-
-@app.route('/sample2')
-def samplemap2():
-    data = jsonify(crud.get_all_office_rating())
-    return render_template('testing_map2.html', data = data)
+    return render_template('testing_map7-just_cluster.html')
 
 
 @app.route('/users')
 def all_users():
     """View all users."""
-    
     users = crud.get_users()
 
     return render_template('all_users.html', users=users)
@@ -177,10 +142,30 @@ def login():
     else:
         return render_template('loginpage.html')
 
+
+@app.route('/signup', methods=['GET', 'POST'])
+def createNewUser():
+    return render_template('signup.html')
+    # if request.method == 'POST':
+    #     username=request.form.get('username')
+    #     password=request.form.get('password')
+        
+    #     user = crud.get_user_by_username(username)
+
+    # session.clear()
+    # return redirect('/')
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
+
+
+
+@app.route('/sample2')
+def samplemap2():
+    return render_template('testing_map.html')
 
 
 @app.route('/testing_map')
@@ -217,12 +202,6 @@ def testing_map6():
     
     return render_template('testing_map6.html')
 
-@app.route('/sample7')
-def testing_map7():
-    """View homepage."""
-
-    return render_template('testing_map7-just_cluster.html')
-
 
 @app.route('/db_data.json')
 def db_data():
@@ -234,48 +213,6 @@ def db_data():
     print(all_offices)
     
     return jsonify(all_offices)
-
-    # @app.route('/handle-login', methods=['POST'])
-    # def handle_login():
-    #     """Log user into application."""
-
-    #     username = request.form['username']
-    #     password = request.form['password']
-
-    #     if password == 'let-me-in':   # FIXME
-    #         session['current_user'] = username
-    #         flash(f'Logged in as {username}')
-    #         return redirect('/')
-
-    #     else:
-    #         flash('Wrong password!')
-    #         return redirect('/login')
-
-    # @app.route('/users', methods=['POST'])
-    # def register_user():
-    #     """Create a new user."""
-
-    #     username = request.form.get('username')
-    #     password = request.form.get('password')
-
-    #     user = crud.get_user_by_username(username)
-    #     if user:
-    #         flash('Cannot create an account with that username. Try again.')
-    #     else:
-    #         crud.create_user(username, password)
-    #         flash('Account created! Please log in.')
-
-    #     return redirect('/')
-
-
-    # @app.route('/users/<user_id>')
-    # def show_user(user_id):
-    #     """Show details on a particular user."""
-
-    #     user = crud.get_user_by_id(user_id)
-
-    #     return render_template('user_details.html', user=user)
-
 
 if __name__ == '__main__':
     connect_to_db(app)

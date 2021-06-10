@@ -1,14 +1,19 @@
-{% extends 'base.html' %}
-{% block head %}
-<script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
-
-
-{% block title %}Map View{% endblock %}
-{% endblock%}
-
-{% block body%}
-<div id='map' position: absolute; style='width: 800px; height: 600px;'></div>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Create and style clusters</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.3.0/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div id='map' style='width: 400px; height: 300px;'></div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmVhbmJhZzczOCIsImEiOiJja29rZ3d0aGIwMDh3MnBtMWp6dGcwMHVvIn0.prLY8xe96YLzfR5rBc8x3g';
     var map = new mapboxgl.Map({
@@ -21,13 +26,12 @@
     map.addControl(new mapboxgl.NavigationControl());
 
     map.on('load', function () {
-        // console.log(geojson)
         // Add a new source from our GeoJSON data and
         // set the 'cluster' option to true. GL-JS will
         // add the point_count property to your source data.
         map.addSource('backtooffices', {
             type: 'geojson',
-            // Point to GeoJSON data. This visualizes all offices within the database.
+            // Point to GeoJSON data. This example visualizes all offices locations.
             data: '/db_data.json',
             cluster: true,
             clusterMaxZoom: 5, // Max zoom to cluster points on
@@ -39,20 +43,19 @@
             type: 'circle',
             source: 'backtooffices',
             filter: ['has', 'point_count'],
-            // clusterProperties: {'sum': ["+", ['get', "sum"]]},
             paint: {
                 // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
                 // with three steps to implement three types of circles:
-                //   * Blue, 20px circles when point count is less than 3
-                //   * Yellow, 30px circles when point count is between 3 and 5
-                //   * Pink, 40px circles when point count is greater than or equal to 5
+                //   * Blue, 20px circles when point count is less than 50
+                //   * Yellow, 30px circles when point count is between 50 and 100
+                //   * Pink, 40px circles when point count is greater than or equal to 100
                 'circle-color': [
                     'step',
                     ['get', 'point_count'],
                     '#51bbd6',
-                    10,
+                    50,
                     '#f1f075',
-                    210,
+                    100,
                     '#f28cb1'
                 ],
                 'circle-radius': [
@@ -64,7 +67,6 @@
                     750,
                     40
                 ]
-                
             }
         });
 
@@ -93,8 +95,6 @@
             }
         });
 
-
-        
         // inspect a cluster on click
         map.on('click', 'clusters', function (e) {
             var features = map.queryRenderedFeatures(e.point, {
@@ -131,6 +131,9 @@
 
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
+                // .setHTML(
+                //     'magnitude1: ' + mag + '<br>Was there a tsunami?: ' + tsunami
+                // )
                 .setHTML('Office Name: ' + e.features[0].properties.office_name + '<p>' +
                     'Rating:'+ rating + '<p>' + 'Last updated on: '+ e.features[0].properties.timestamp)
                 .addTo(map);
@@ -145,4 +148,5 @@
     });
 </script>
 
-{% endblock %}
+</body>
+</html>

@@ -38,11 +38,11 @@ A list of all available data so far...
     <tr>
     {% for office in officesData.features %}
 
-    <th>{{office['properties']['id']}}</th>
-    <th>{{office['properties']['office_name']}}</th>
-    <th>{{office['properties']['office_location']}}</th>
-    <th>{{office['properties']['rating']}}</th>
-    <th>{{office['properties']['timestamp'].strftime("%x")}}</th>
+    <td>{{office['properties']['id']}}</td>
+    <td>{{office['properties']['office_name']}}</td>
+    <td>{{office['properties']['office_location']}}</td>
+    <td>{{office['properties']['rating']}}</td>
+    <td>{{office['properties']['timestamp'].strftime("%x")}}</td>
     </tr>
     {% endfor %}
 

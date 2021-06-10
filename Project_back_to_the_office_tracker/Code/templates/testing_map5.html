@@ -35,67 +35,11 @@ var rating5 = ['>=', ['get', 'rating'], 100];
 // colors to use for the categories
 var colors = ['#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c'];
  
-var geojson = {
-                    "type": "FeatureCollection",
-                    "features": [
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "1", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.1550338, 37.4810185] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "2", 
-                                    "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025", 
-                                    "office_name": "Facebook",
-                                    "rating": 40, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                }, 
-                            "geometry": 
-                                {
-                                    "type": "Point", 
-                                    "coordinates": 
-                                    [-122.1550338, 37.4810185] 
-                                } 
-                        },
-                        { 
-                            "type": "Feature", 
-                            "properties": 
-                                {
-                                    "id": "3", 
-                                    "office_location": "923 Hamilton Ave, Menlo Park, CA 94025", 
-                                    "office_name": "ABC",
-                                    "rating": 80, 
-                                    "timestamp": "Wed, 26 May 2021 21:57:53 GMT"
-                                },
-                            "geometry": 
-                                {
-                                    "type": "Point",
-                                    "coordinates": 
-                                    [-77.032, 38.913]
-                                } 
-                        }
-                    ]};
-
 map.on('load', function () {
 // add a clustered GeoJSON source for a sample set of backtooffices
 map.addSource('backtooffices', {
 'type': 'geojson',
-'data': geojson,
+data: '/db_data.json',
 'cluster': true,
 'clusterRadius': 80,
 'clusterProperties': {

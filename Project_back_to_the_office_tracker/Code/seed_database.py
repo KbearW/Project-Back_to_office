@@ -15,6 +15,8 @@ os.system('createdb tracker')
 model.connect_to_db(server.app, echo=False)
 model.db.create_all()
 
+
+
 # Load office data from JSON file
 with open('data/offices.json') as f:
     office_data = json.loads(f.read())
