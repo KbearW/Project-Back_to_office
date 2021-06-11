@@ -7,7 +7,7 @@ console.log('yes, form.js is working')
 const form = document.getElementById('form');
 const company = document.querySelector('#company');
 const address = document.querySelector('#address');
-const rating = document.getElementsByName('rating');
+const ratings = document.getElementsByName("rating");
 const para = document.querySelector('p');
 
 company.placeholder = 'Company Name'
@@ -16,10 +16,21 @@ address.placeholder = 'Street, City, State'
 
 form.onsubmit = function(e) {
   // e.preventDefault();
-  // console.log('yes')  
-  // rating.value doesn' work.... radio button--> "checked"- look into it
-  if (company.value === '' || address.value === '' || rating.value === '') {
-      e.preventDefault();
-      para.textContent = 'You need to fill in both names!';
-    }
+  // console.log('yes')  ;
+  function radioChecked (e){      
+                              for (var i=0, len=ratings.length; i<len; i++){
+                                  if (ratings[i].checked){
+                                    console.log('true')
+                                    return true;
+                                  }
+                               }
+                                para.textContent='false';
+                                return false;
+                          }
+
+        if (company.value === '' || address.value === '' || radioChecked() === false
+        ) {
+          e.preventDefault();
+          para.textContent = 'Please fill out all fields!';
+        }
   }
