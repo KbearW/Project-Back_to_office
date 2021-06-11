@@ -64,5 +64,3 @@ for n in range(10):
         # print(created_at)
         # print(user.user_id, office_code, score, created_at)
         crud.create_rating( score, office_code, user.user_id)
-
-    

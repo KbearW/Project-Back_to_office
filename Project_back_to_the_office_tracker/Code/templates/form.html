@@ -2,51 +2,52 @@
 {% block title %}Form{% endblock %}
 
 {% block body %}
-<script src="/static/form.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js" 
-integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
-crossorigin="anonymous"></script>
-<h1>Form</h1>
-<form action="/form" method="POST">
 
-<p>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.js" 
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+crossorigin="anonymous"></script> -->
+<h1>Form</h1>
+<form action="/form" id='form' method="POST">
+
+<div>
 Hi, {{username}}! 
 <br>
 Let's log your company details:
-</p>
-<p>
+</div>
+<div>
     <em><b>
     DOM needs to be setup here.
     When Anonymous, user_id can only be 1... and existed in the db
     </em></b>
-</p>
+</div>
 
-<p>
+<div>
 Company Name:
 <input type="text" id= "company" name="company_name">
-</p>
+</div>
 
-<p>
+<div>
 Office Address:
 <input type="text" id = "address" name="office_location">
 <br>
 
-</p>
-<p>
+</div>
+<div>
 Back to the Office Status:
-    <input type="radio" id="status1" name="rating" value='0'>0%
-    <input type="radio" id="status2" name="rating" value='20'>20%
-    <input type="radio" id="status3" name="rating" value='40'>40%
-    <input type="radio" id="status4" name="rating" value='60'>60%
-    <input type="radio" id="status5" name="rating" value='80'>80%
-    <input type="radio" id="status6" name="rating" value='100'>100%
-</p>
-<p>
-    <button type="submit">Submit Status</button>
+    <input type="radio" name="rating" value='0'>0%
+    <input type="radio" name="rating" value='20'>20%
+    <input type="radio" name="rating" value='40'>40%
+    <input type="radio" name="rating" value='60'>60%
+    <input type="radio" name="rating" value='80'>80%
+    <input type="radio" name="rating" value='100'>100%
+</div>
+<div>
+    <input id="submit" type="submit"></input>
     <!-- figure some sort of logic to fool proof this submit button -->
 
-</p>
-
+</div>
+<p></p>
+<script src="/static/form.js"></script>
 </form>
 
 

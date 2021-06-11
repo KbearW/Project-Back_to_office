@@ -36,7 +36,7 @@ class Office(db.Model):
     office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return f'<Company office_code={self.office_code}, office name= {self.company_name}, location={self.office_location}, office_latitude={self.office_latitude}, office_longitude = {self.office_longitude}>'
+        return f'<office_code={self.office_code}, office name= {self.company_name}, location={self.office_location}, office_latitude={self.office_latitude}, office_longitude = {self.office_longitude}>'
 
 
 class Rating(db.Model):

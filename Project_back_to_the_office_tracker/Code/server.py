@@ -54,7 +54,7 @@ def form():
     else:    
         company_name=request.form.get('company_name')
         office_location=request.form.get('office_location')
-        rating=int(request.form['rating'])
+        # rating=int(request.form.get(''))
         coordinates=geocode(office_location)
         office_latitude= coordinates[1]
         office_longitude= coordinates[0]
@@ -213,6 +213,24 @@ def db_data():
     print(all_offices)
     
     return jsonify(all_offices)
+
+
+@app.route('/DOM')
+def sample():
+    return render_template('DOM_sample.html')
+
+@app.route('/resize')
+def resize():
+    return render_template('window_resize.html')
+
+@app.route('/shopping')
+def shopping():
+    return render_template('shoppinglist.html')
+
+@app.route('/form2')
+def form2():
+    return render_template('form-DOM.html')
+
 
 if __name__ == '__main__':
     connect_to_db(app)
