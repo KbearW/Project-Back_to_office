@@ -78,8 +78,6 @@ def get_rating_info(office_code):
 
     rating_by_company_code = db.session.query( Rating.rating, Rating.created_at).filter_by(office_code=office_code)
     latest_rating = rating_by_company_code.order_by(Rating.created_at.desc()).first()
-    # print (latest_rating)
-    # print({"rating":latest_rating[0], "timestamp": latest_rating[1]})
     return {"rating":latest_rating[0], "timestamp": latest_rating[1]}
 
 
@@ -97,8 +95,12 @@ def get_all_office_rating():
                     "id": office.office_code,
                     "office_location": office.office_location,
                     "office_name": office.company_name, 
-                    "rating": get_rating_info(office.office_code)["rating"], 
-                    "timestamp": get_rating_info(office.office_code)["timestamp"],
+
+                    # Issue with these lines from L81 above, related to sqlalchemy collection.result
+                    # "rating": get_rating_info(office.office_code)["rating"], 
+                    # "timestamp": get_rating_info(office.office_code)["timestamp"],
+                    "rating": '40',
+                    "timestamp": "datetime.datetime(2021, 6, 11, 19, 36, 52, 580206)"
             }, 
             "geometry": {"type": "Point", 
                         "coordinates": [

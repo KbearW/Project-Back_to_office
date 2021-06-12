@@ -22,3 +22,7 @@ table, th, td {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
+
+.p {
+  color: red
+}

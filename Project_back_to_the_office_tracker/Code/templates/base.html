@@ -15,9 +15,9 @@
   <body>
     
     {% for msg in get_flashed_messages() %}
-      <p class="flash-msg" style="color:red;">
+      <div class="flash-msg" style="color:red;">
         {{ msg }}
-      </p>
+      </div>
     {% endfor %}
 
     {% block body %}{% endblock %}

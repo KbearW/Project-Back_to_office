@@ -54,7 +54,7 @@ def form():
     else:    
         company_name=request.form.get('company_name')
         office_location=request.form.get('office_location')
-        rating=int(request.form.get('rating'))
+        rating='40'
         coordinates=geocode(office_location)
         office_latitude= coordinates[1]
         office_longitude= coordinates[0]

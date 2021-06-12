@@ -4,10 +4,15 @@
 {% block body %}
 
 A list of all available data so far...
+
+<form action="/form" id='form' method="POST">
+
 <div class="content">
     <h1>Office in a list</h1>
-
-<table>
+<p></p>
+<input type="text" id= "search" name="search">
+<input id="submit" type="submit"></input>
+<table id='table'>
     <tr>
         <th>Company_id</th>
         <th>Company_name</th>
@@ -41,14 +46,14 @@ A list of all available data so far...
     <td>{{office['properties']['id']}}</td>
     <td>{{office['properties']['office_name']}}</td>
     <td>{{office['properties']['office_location']}}</td>
-    <td>{{office['properties']['rating']}}</td>
-    <td>{{office['properties']['timestamp'].strftime("%x")}}</td>
+
     </tr>
     {% endfor %}
 
-
+    <script src="/static/listview.js"></script>
 </tbody>
 </tr>
 </table>
 </div>
+</form>
 {% endblock %}

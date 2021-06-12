@@ -3,9 +3,6 @@
 
 {% block body %}
 
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.js" 
-integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
-crossorigin="anonymous"></script> -->
 <h1>Form</h1>
 <form action="/form" id='form' method="POST">
 
@@ -14,6 +11,7 @@ Hi, {{username}}!
 <br>
 Let's log your company details:
 </div>
+<p>~~~~~~~~THIS ELEMENT SHOULD BE RED!</p>
 <div>
     <em><b>
     When Anonymous, user_id can only be 1... and existed in the db
@@ -45,7 +43,6 @@ Back to the Office Status:
     <!-- figure some sort of logic to fool proof this submit button -->
 
 </div>
-<p></p>
 <script src="/static/form.js"></script>
 </form>
 

@@ -31,6 +31,6 @@ form.onsubmit = function(e) {
         if (company.value === '' || address.value === '' || radioChecked() === false
         ) {
           e.preventDefault();
-          para.textContent = 'Please fill out all fields!';
+          para.textContent = 'Please fill out all fields!~~~~~(IN RED)';
         }
   }
