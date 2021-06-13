@@ -39,13 +39,17 @@ def about():
 @app.route('/form', methods=['POST', 'GET'])
 def form():
     """Input form"""
+    print('~~~~~~~~~~~~')
+    print(session)
     if 'username' not in session:
         username = 'Anonymous'
         user_id = '1'
         pass
     else:
+        # username='user000'
+        print(session)
         username=session['username']
-        user_id=crud.get_userid(username)[0]
+        user_id=crud.get_userid(username).user_id
         flash(f'You have logged in as {username}!')
 
     if request.method == 'GET':

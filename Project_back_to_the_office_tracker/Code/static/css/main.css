@@ -3,9 +3,6 @@ body {
     font-family:sans-serif ;
     margin: 0; padding: 0; 
 }
-table, th, td {
-  border: 1px solid grey;
-}
 .marker {
   background-image: url('mapbox-icon.png');
   background-size: cover;
@@ -25,4 +22,36 @@ table, th, td {
 
 .p {
   color: red
+}
+
+#myInput {
+  /* This img tag doesn't work */
+  background-image: url('static/searchicon.png'); 
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#table th, #table td {
+  text-align: left;
+  padding: 12px;
+}
+
+#table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#table tr.header, #table tr:hover {
+  background-color: #ddd;
 }

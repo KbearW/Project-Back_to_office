@@ -75,9 +75,13 @@ def get_office_data():
 
 def get_rating_info(office_code):
     """Get rating info."""
-
+    # import pdb 
+    # if office_code==6:
+    #     pdb.set_trace()
     rating_by_company_code = db.session.query( Rating.rating, Rating.created_at).filter_by(office_code=office_code)
     latest_rating = rating_by_company_code.order_by(Rating.created_at.desc()).first()
+    print(type(latest_rating))
+    print(type({"rating":latest_rating[0], "timestamp": latest_rating[1]}))
     return {"rating":latest_rating[0], "timestamp": latest_rating[1]}
 
 
@@ -97,10 +101,10 @@ def get_all_office_rating():
                     "office_name": office.company_name, 
 
                     # Issue with these lines from L81 above, related to sqlalchemy collection.result
-                    # "rating": get_rating_info(office.office_code)["rating"], 
-                    # "timestamp": get_rating_info(office.office_code)["timestamp"],
-                    "rating": '40',
-                    "timestamp": "datetime.datetime(2021, 6, 11, 19, 36, 52, 580206)"
+                    "rating": get_rating_info(office.office_code)["rating"], 
+                    "timestamp": get_rating_info(office.office_code)["timestamp"],
+                    # "rating": '40',
+                    # "timestamp": "datetime.datetime(2021, 6, 11, 19, 36, 52, 580206)"
             }, 
             "geometry": {"type": "Point", 
                         "coordinates": [
@@ -116,12 +120,6 @@ def get_map_data():
     """combine get_office_data() and get_rating_info() into one function for jsonify."""
     
     office_data = get_office_data()
-    # Q: how to combine the two functions?
-    # Sudo Code:
-    # 
-
-    # for loop
-    # result = 
     
     return office_data
 
@@ -138,8 +136,8 @@ def get_companyname(companyname):
 
 def get_userid(username):
     """Get users."""
-    
-    return db.session.query(User.user_id).filter(User.username==username).first()
+
+    return User.query.filter(User.username==username).first()
 
 
 # Something is off for the login function...

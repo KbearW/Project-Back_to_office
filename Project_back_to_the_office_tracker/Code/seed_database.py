@@ -32,9 +32,6 @@ for office in office_data:
                                     office['office_location'],
                                     office['office_latitude'],
                                     office['office_longitude'])
-    
-
-# db_users = crud.create_user
 
     # create a office and append it to office_in_db
     db_office = crud.create_office(company_name, 
@@ -42,25 +39,17 @@ for office in office_data:
                                     office_latitude,
                                     office_longitude)
 
+    # Create a rating for each office
+    office_code = crud.get_office_code(company_name, office_location)
+
+    for n in range(2):
+        user = f'user{n+1}@{company_name}.com'
+        password = 'test'
+        user = crud.create_user(user, password)
+        score = randrange(0,100,20)
+        crud.create_rating( score, office_code, user.user_id)
 
     office_in_db.append(db_office)
     model.db.session.add(db_office)
 model.db.session.commit()
 
-for n in range(10):
-    user = f'user{n+1}@test.com'
-    password = 'test'
-
-    # create a user here
-    user = crud.create_user(user, password)
-    print(user)
-
-    # create 10 ratings for the user
-    
-    for x in range(1):
-        office_code = choice(office_in_db).office_code 
-        score = randrange(0,100,20)
-        # created_at = datetime.now()
-        # print(created_at)
-        # print(user.user_id, office_code, score, created_at)
-        crud.create_rating( score, office_code, user.user_id)

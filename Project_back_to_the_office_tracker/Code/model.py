@@ -14,7 +14,7 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True,
                         primary_key=True
                         )
-    username = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String, unique=False, nullable=False)
     password = db.Column(db.String, nullable=False)
 
     def __repr__(self):
@@ -31,13 +31,15 @@ class Office(db.Model):
                         )
     company_name = db.Column(db.String, nullable=False)
     office_location = db.Column(db.Text, nullable=False)
+    # office_city = db.Column(db.Text, nullable=False)
+    # office_state = db.Column(db.Text, nullable=False)
     # coordinates = db.Column(postgresql.ARRAY(db.Float), nullable=False)
     office_latitude = db.Column(db.Float, nullable=False)
     office_longitude = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return f'<office_code={self.office_code}, office name= {self.company_name}, location={self.office_location}, office_latitude={self.office_latitude}, office_longitude = {self.office_longitude}>'
-
+        # office_state={self.office_state}, office_city={self.office_city}
 
 class Rating(db.Model):
     """Back to office rating."""

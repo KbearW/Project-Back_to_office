@@ -5,48 +5,36 @@
 
 A list of all available data so far...
 
-<form action="/form" id='form' method="POST">
+<form id='form' method="GET">
 
 <div class="content">
     <h1>Office in a list</h1>
 <p></p>
-<input type="text" id= "search" name="search">
-<input id="submit" type="submit"></input>
-<table id='table'>
-    <tr>
-        <th>Company_id</th>
-        <th>Company_name</th>
-        <th>Office_location</th>
-        <th>Ratings</th>
-        <th>Latest Update</th>
+<input type="text" id= "search" onkeyup="searchfunction()" 
+placeholder="Search for a company.." name="search">
+<!-- <input id="submit" type="submit"></input> -->
+<!-- <p><button onclick="sortTable_company_id()">Sort by Company ID</button></p> -->
+<p><button onclick="sortTable_company_name()">Sort by Company Name</button></p>
+<!-- <p><button onclick="sortTable_office_lcoation()">Sort by Company Office City</button></p> -->
+
+<table id='table' class="table table-sortable">
+    <tr class='header'>
+        <!-- <th style='width:20%;'>Company_id</th> -->
+        <th style='width:20%;'>Company_name</th>
+        <th style='width:20%;'>Office_location</th>
+        <th style='width:20%;'>Ratings</th>
+        <th style='width:20%;'>Latest Update</th>
     </tr>
-        
-    <!-- {{officesData}}
-    <p>
-    ~~~~~~~~~~~~~~~~
-    </p>
-    {{officesData.features[0]['properties']}}
-    <p>
-    Office_id: {{officesData.features[0]['properties']['id']}}
-    </p>
-    Office_name: {{officesData.features[0]['properties']['office_name']}}
-    
-    <p>Office_location: {{officesData.features[0]['properties']['office_location']}} </p>
 
-    Rating: {{officesData.features[0]['properties']['rating']}}
-
-    <p>Last updated on: {{officesData.features[0]['properties']['timestamp']}} </p>
-    <p>
-        ~~~~~~~~~~~~~~~~
-        </p> -->
     <tbody>
     <tr>
     {% for office in officesData.features %}
 
-    <td>{{office['properties']['id']}}</td>
+    <!-- <td>{{office['properties']['id']}}</td> -->
     <td>{{office['properties']['office_name']}}</td>
     <td>{{office['properties']['office_location']}}</td>
-
+    <td>{{office['properties']['rating']}}</td>
+    <td>{{office['properties']['timestamp']}}</td>
     </tr>
     {% endfor %}
 
