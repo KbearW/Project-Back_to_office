@@ -58,7 +58,7 @@ def form():
     else:    
         company_name=request.form.get('company_name')
         office_location=request.form.get('office_location')
-        rating='40'
+        rating=int(request.form.get('rating'))
         coordinates=geocode(office_location)
         office_latitude= coordinates[1]
         office_longitude= coordinates[0]
@@ -74,7 +74,7 @@ def form():
         office_code=cpname.office_code
         
         crud.create_rating(rating, office_code, user_id)
-        print('*******Completed******')
+        # print('*******Completed******')
         return render_template('thankyou.html')
             
 
