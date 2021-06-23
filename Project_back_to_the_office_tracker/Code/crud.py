@@ -80,9 +80,15 @@ def get_rating_info(office_code):
     #     pdb.set_trace()
     rating_by_company_code = db.session.query( Rating.rating, Rating.created_at).filter_by(office_code=office_code)
     latest_rating = rating_by_company_code.order_by(Rating.created_at.desc()).first()
+    print('**********************************')
+    print(office_code)
     print(type(latest_rating))
-    print(type({"rating":latest_rating[0], "timestamp": latest_rating[1]}))
-    return {"rating":latest_rating[0], "timestamp": latest_rating[1]}
+    if latest_rating:
+        print(type({"rating":latest_rating[0], "timestamp": latest_rating[1]}))
+        return {"rating":latest_rating[0], "timestamp": latest_rating[1]}
+    else:
+        return {"rating": None, "timestamp": None}
+ 
 
 
 def get_all_office_rating():

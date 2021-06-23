@@ -1,4 +1,4 @@
-[
+
     [
         {
             "company_name": "Ullamcorper Velit Institute",
@@ -1277,9 +1277,7 @@
             "office_latitude": 40.76833,
             "office_location": "Hemisphere House, 6th Avenue, Midtown, Manhattan Community Board 5, Manhattan, New York County, New York, 10019, United States",
             "office_longitude": -73.980187
-        }
-    ],
-    [
+        },
         {
             "company_name": "Nec Cursus A Institute",
             "office_latitude": 37.776206,
@@ -2227,9 +2225,7 @@
             "office_latitude": 37.782535,
             "office_location": "Hayes Valley Parcel O, 455, Fell Street, Western Addition, San Francisco, San Francisco City and County, San Francisco, California, 94115-4620, United States",
             "office_longitude": -122.422112
-        }
-    ],
-    [
+        },
         {
             "company_name": "Egestas Aliquam Nec Inc.",
             "office_latitude": 42.364545,
@@ -2733,9 +2729,7 @@
             "office_latitude": 42.368358,
             "office_location": "Marie E. Mirabella Pool, 475, Commercial Street, Dock Square, North End, Boston, Suffolk County, Massachusetts, 02113, United States",
             "office_longitude": -71.04960700000001
-        }
-    ],
-    [
+        },
         {
             "company_name": "Interdum Libero Dui Inc.",
             "office_latitude": 41.8348612,
@@ -2945,9 +2939,7 @@
             "office_latitude": 41.8367122,
             "office_location": "Ronald Reagan Memorial Tollway, Downers Grove, DuPage County, Illinois, 60515, United States",
             "office_longitude": -88.0109055
-        }
-    ],
-    [
+        },
         {
             "company_name": "Ultricies Associates",
             "office_latitude": 25.769761000000003,
@@ -3668,5 +3660,5 @@
             "office_location": "One Brickell Square, 801, Brickell Avenue, Miami, Miami-Dade County, Florida, 33131, United States",
             "office_longitude": -80.185214
         }
+
     ]
-]

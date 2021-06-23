@@ -1,15 +1,9 @@
 [
     {
-        "company_name": "Facebook1",
+        "company_name": "Facebook",
         "office_location": "MPK 20 1 Facebook Way, Menlo Park, CA 94025",
         "office_latitude": "37.4810185", 
         "office_longitude": "-122.1550338"
-     },
-     {
-        "company_name": "Facebook2",
-        "office_location": "923 Hamilton Ave, Menlo Park, CA 94025",
-        "office_latitude": "37.4810185", 
-        "office_longitude": "-122.1512711"
      },
      {
         "company_name": "Lyft",
@@ -28,5 +22,149 @@
         "office_location": "535 Mission St. #700, San Francisco, CA 94105",
         "office_latitude": "37.7888897",
         "office_longitude": "-122.4068551"
-     }
+     },
+     {
+        "company_name": "Google",
+        "office_location": "1600 Amphitheatre Parkway, Mountain View, CA",
+        "office_latitude": "37.4220",
+        "office_longitude": "-122.0840"
+     },
+     {
+        "company_name": "Apple",
+        "office_location": "One Apple Park Way, Cupertino, CA 95014",
+        "office_latitude": "37.3331",
+        "office_longitude": "-122.0038"
+     },
+     {
+      "company_name": "JP Morgan",
+      "office_latitude": 40.7551,
+      "office_location": "383 Madison Ave, New York, NY 10179",
+      "office_longitude": -73.9766
+  },
+  {
+      "company_name": "PepsiCo",
+      "office_latitude": 40.7487,
+      "office_location": "350 Hudson Street, New York, NY 10179",
+      "office_longitude": -73.9545
+  },
+  {
+      "company_name": "Deloitte",
+      "office_latitude": 40.760863,
+      "office_location": "30 Rockefeller Plaze, New York, NY 10112",
+      "office_longitude": -73.976742
+  },
+  {
+      "company_name": "Citigroup",
+      "office_latitude": 40.767594,
+      "office_location": "Cop Cot, Center Drive, New York, 10107, United States",
+      "office_longitude": -73.977043
+  },
+  {
+      "company_name": "Pfizer",
+      "office_latitude": 40.762505,
+      "office_location": "666 Fifth Avenue, New York, 10019, United States",
+      "office_longitude": -73.982226
+  },
+  {
+      "company_name": "NBCUniversal",
+      "office_latitude": 40.759367,
+      "office_location": "Times Square Church, 237, West 51st Street, New York, 10019, United States",
+      "office_longitude": -73.984703
+  },
+{
+    "company_name": "Office Depot",
+    "office_latitude": 25.765894,
+    "office_location": "1060 Brickell Avenue, Miami, Florida, 33131, United States",
+    "office_longitude": -80.188795
+},
+{
+    "company_name": "Winn-Dixie",
+    "office_latitude": 25.763886,
+    "office_location": "Brickell Bay Office Tower, Miami, Florida, 33131, United States",
+    "office_longitude": -80.18874
+},
+{
+    "company_name": "Red Lobster",
+    "office_latitude": 25.762165,
+    "office_location": "Two Tequesta Point, 808, Miami, Florida, 33131, United States",
+    "office_longitude": -80.186788
+},
+{
+    "company_name": "The Beach",
+    "office_latitude": 25.762045,
+    "office_location": "Brickell Key Drive, Miami, Florida, 33131, United States",
+    "office_longitude": -80.185076
+},
+{
+    "company_name": "Publix",
+    "office_latitude": 25.765161000000003,
+    "office_location": "900, Brickell Key Boulevard, Miami, Florida, 33131, United States",
+    "office_longitude": -80.188085
+},
+{
+    "company_name": "Chewy",
+    "office_latitude": 25.763451,
+    "office_location": "One Brickell Square, Miami, Florida, 33131, United States",
+    "office_longitude": -80.185214
+},
+{
+    "company_name": "ADT",
+    "office_latitude": 25.762165,
+    "office_location": "Twenty-two Tequesta Point, Miami, Florida, 33131, United States",
+    "office_longitude": -80.196788
+},
+{
+    "company_name": "VITAS Healthcare",
+    "office_latitude": 25.722045,
+    "office_location": "Brick Key Drive, Miami, Florida, 33131, United States",
+    "office_longitude": -80.136076
+},
+{
+    "company_name": "Citrix Systems",
+    "office_latitude": 25.85161000000003,
+    "office_location": "Brickell Key Boulevard, Miami, Florida, 33131, United States",
+    "office_longitude": -80.288085
+},
+{
+    "company_name": "SeaWorld",
+    "office_latitude": 25.963451,
+    "office_location": "SeaWorld Drive Miami, Florida, 33131, United States",
+    "office_longitude": -80.485214
+},
+{
+    "company_name": "MetLife",
+    "office_latitude": 40.767583,
+    "office_location": "31, West 57th Street, Manhattan,New York, 10019, United States",
+    "office_longitude": -73.979921
+},
+{
+    "company_name": "Foot Locker",
+    "office_latitude": 40.762538,
+    "office_location": "Hemisphere House, 6th Avenue, New York, 10019, United States",
+    "office_longitude": -73.978967
+},
+{
+    "company_name": "Ferry Land",
+    "office_latitude": 42.56,
+    "office_location": "West 58th Street, Midtown, New York, 10019, United States",
+    "office_longitude": -72.91
+},
+{
+    "company_name": "Mary Land",
+    "office_latitude": 42.87,
+    "office_location": "16 Charles Street, Boston, MA 02110",
+    "office_longitude": -71.67
+},
+{
+    "company_name": "Lala Land",
+    "office_latitude": 42.3538,
+    "office_location": "1 Federal Street, Boston, MA 02110 ",
+    "office_longitude": -71.288967
+},
+{
+    "company_name": "CBS",
+    "office_latitude": 40.73538,
+    "office_location": " 6th Avenue, New York, 10019, United States",
+    "office_longitude": -73.988967
+}
 ]

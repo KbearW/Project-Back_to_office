@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-{% block title %}List view{% endblock %}
+{% block title %}List View{% endblock %}
 
 {% block body %}
+<h1>List View</h1>
+<form id='form' method="GET" class="content">
 
-A list of all available data so far...
-
-<form id='form' method="GET">
-
-<div class="content">
-    <h1>Office in a list</h1>
 <p></p>
 <input type="text" id= "search" onkeyup="searchfunction()" 
 placeholder="Search for a company.." name="search">
+
+</form>
 <!-- <input id="submit" type="submit"></input> -->
 <!-- <p><button onclick="sortTable_company_id()">Sort by Company ID</button></p> -->
-<p><button onclick="sortTable_company_name()">Sort by Company Name</button></p>
+<p ><button onclick="sortTable_company_name()">Sort by Company Name</button>
+<button onclick="sortTable_rating()">Sort by Rating</button></p>
+
 <!-- <p><button onclick="sortTable_office_lcoation()">Sort by Company Office City</button></p> -->
 
-<table id='table' class="table table-sortable">
+<table id='table' class="table table-sortable table-light">
     <tr class='header'>
         <!-- <th style='width:20%;'>Company_id</th> -->
         <th style='width:20%;'>Company_name</th>
@@ -43,5 +43,4 @@ placeholder="Search for a company.." name="search">
 </tr>
 </table>
 </div>
-</form>
 {% endblock %}

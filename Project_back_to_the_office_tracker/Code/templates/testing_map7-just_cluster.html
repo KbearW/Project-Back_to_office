@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
+{% block title %}Map View{% endblock %}
+
 {% block head %}
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
 
 
-{% block title %}Map View{% endblock %}
 {% endblock%}
 
 {% block body%}
+<h1>Map View</h1>
 <div id='map' position: absolute; style='width: 800px; height: 600px;'></div>
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1IjoiYmVhbmJhZzczOCIsImEiOiJja29rZ3d0aGIwMDh3MnBtMWp6dGcwMHVvIn0.prLY8xe96YLzfR5rBc8x3g';
@@ -50,10 +52,12 @@
                     'step',
                     ['get', 'point_count'],
                     '#51bbd6',
-                    10,
+                    5,
                     '#f1f075',
-                    210,
-                    '#f28cb1'
+                    10,
+                    '#58d68d',
+                    15,
+                    '#85c1e9'
                 ],
                 'circle-radius': [
                     'step',
@@ -128,11 +132,11 @@
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
-
+                
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
-                .setHTML('Office Name: ' + e.features[0].properties.office_name + '<p>' +
-                    'Rating:'+ rating + '<p>' + 'Last updated on: '+ e.features[0].properties.timestamp)
+                .setHTML('<div style="color: black">Office Name: ' + e.features[0].properties.office_name + '<p>' +
+                    'Rating:'+ rating + '<p>' + 'Last updated on: '+ e.features[0].properties.timestamp+'</div>')
                 .addTo(map);
         });
 

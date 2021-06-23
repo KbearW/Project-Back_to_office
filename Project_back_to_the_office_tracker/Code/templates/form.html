@@ -3,44 +3,41 @@
 
 {% block body %}
 
-<h1>Form</h1>
-<form action="/form" id='form' method="POST">
+<div class='container'>
+<h1>Enter a new record</h1>
+<form action="/form" id='form' method="POST" >
+    <br>
+    <h3>
+    Hi, {{username}}! 
+    <br>
+    <br>
+    </h3>
 
+    <h5>
+        <div >
+        <p>
+            Company Name:
+            <input type="text" id= "company" name="company_name">
+            Office Address:
+            <input type="text" id = "address" name="office_location">
+        </p></div>
+        <div >
+        <p>
+        Back to the Office Status:
+            <p>
+            <input type="radio" class="radio" name="rating" id='0' value='0'>0%
+            <input type="radio" class="radio" name="rating" id='20' value='20'>20%
+            <input type="radio" class="radio" name="rating" id='40' value='40'>40%
+            <input type="radio" class="radio" name="rating" id='60' value='60'>60%
+            <input type="radio" class="radio" name="rating" id='80' value='80'>80%
+            <input type="radio" class="radio" name="rating" id='100' value='100'>100%
+            </p>
+        </p>
+        </div>
+    </h5>
+    <br>
 <div>
-Hi, {{username}}! 
-<br>
-Let's log your company details:
-</div>
-<p>~~~~~~~~THIS ELEMENT SHOULD BE RED!</p>
-<div>
-    <em><b>
-    When Anonymous, user_id can only be 1... and existed in the db
-    </em></b>
-</div>
-
-<div>
-Company Name:
-<input type="text" id= "company" name="company_name">
-</div>
-
-<div>
-Office Address:
-<input type="text" id = "address" name="office_location">
-<br>
-
-</div>
-<div>
-Back to the Office Status:
-    <input type="radio" name="rating" id='0' value='0'>0%
-    <input type="radio" name="rating" id='20' value='20'>20%
-    <input type="radio" name="rating" id='40' value='40'>40%
-    <input type="radio" name="rating" id='60' value='60'>60%
-    <input type="radio" name="rating" id='80' value='80'>80%
-    <input type="radio" name="rating" id='100' value='100'>100%
-</div>
-<div>
-    <input id="submit" type="submit"></input>
-    <!-- figure some sort of logic to fool proof this submit button -->
+    <h2><button id="submit" type="submit">Submit</button></h2>
 
 </div>
 <script src="/static/form.js"></script>

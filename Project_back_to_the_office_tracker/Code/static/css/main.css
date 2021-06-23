@@ -1,7 +1,7 @@
 body {
-    margin: 50;
+    margin: 80px;
     font-family:sans-serif ;
-    margin: 0; padding: 0; 
+    color:white;
 }
 .marker {
   background-image: url('mapbox-icon.png');
@@ -24,16 +24,17 @@ body {
   color: red
 }
 
-#myInput {
-  /* This img tag doesn't work */
+#search {
   background-image: url('searchicon.png'); 
   background-position: 10px 10px;
   background-repeat: no-repeat;
   width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
+  font-size: 20px;
+  padding: 12px 40px 12px 60px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
+  background-size: auto 40px;
+  background-blend-mode: hard-light;
 }
 
 #table {
@@ -41,6 +42,7 @@ body {
   width: 100%;
   border: 1px solid #ddd;
   font-size: 18px;
+  color: black;
 }
 
 #table th, #table td {
@@ -54,4 +56,25 @@ body {
 
 #table tr.header, #table tr:hover {
   background-color: #ddd;
+}
+
+.mt-0 {
+  margin-top: 5 !important;
+}
+
+.white-text {
+  color:white
+}
+
+.a {
+  color: white;
+}
+
+.radio {
+  border: 0px;
+  margin: 20px;
+}
+
+input[type='radio'] {
+  transform:scale(2);
 }

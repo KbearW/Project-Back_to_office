@@ -28,26 +28,26 @@ def homepage():
 @app.route('/about')
 def about():
     """Project goal"""
-    if "username" in session:
-        username=session['username']
-        flash(f'You have logged in as {username}!')
-    else:
-        flash('Welcome, Guest!')
+    # if "username" in session:
+    #     username=session['username']
+    #     flash(f'You have logged in as {username}!')
+    # else:
+    #     flash('Welcome, Guest!')
     return render_template('about.html')
 
 
 @app.route('/form', methods=['POST', 'GET'])
 def form():
     """Input form"""
-    print('~~~~~~~~~~~~')
-    print(session)
+    # print('~~~~~~~~~~~~')
+    # print(session)
     if 'username' not in session:
-        username = 'Anonymous'
+        username = 'Guest'
         user_id = '1'
         pass
     else:
         # username='user000'
-        print(session)
+        # print(session)
         username=session['username']
         user_id=crud.get_userid(username).user_id
         flash(f'You have logged in as {username}!')
@@ -103,12 +103,12 @@ def mapDisplay():
     return render_template('testing_map7-just_cluster.html')
 
 
-@app.route('/users')
-def all_users():
-    """View all users."""
-    users = crud.get_users()
+# @app.route('/users')
+# def all_users():
+#     """View all users."""
+#     users = crud.get_users()
 
-    return render_template('all_users.html', users=users)
+#     return render_template('all_users.html', users=users)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -148,8 +148,14 @@ def login():
 
 
 @app.route('/signup', methods=['GET', 'POST'])
-def createNewUser():
-    return render_template('signup.html')
+# def createNewUser():
+#     # if request.method == 'POST':
+#         # username=request.form.get('username')
+#         # password=request.form.get('password')
+#         # user = crud.get_user_by_username(username)
+#         # if username 
+
+#     return render_template('signup.html', )
     # if request.method == 'POST':
     #     username=request.form.get('username')
     #     password=request.form.get('password')
@@ -206,6 +212,11 @@ def testing_map6():
     
     return render_template('testing_map6.html')
 
+@app.route('/creator')
+def creator():
+    """View homepage."""
+    
+    return render_template('creator.html')
 
 @app.route('/db_data.json')
 def db_data():
