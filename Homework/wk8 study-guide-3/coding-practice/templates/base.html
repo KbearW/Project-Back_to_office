@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A Fun App</title>
+</head>
+<body>
+  {% if session.get('name') %}
+      <h2>Hello, {{ session.get('name') }}</h2>
+  {% else %}
+      <h2>Welcome. I don't know your name</h2>
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+</body>
+</html>

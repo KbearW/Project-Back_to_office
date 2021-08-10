@@ -1,0 +1,11 @@
+appdirs==1.4.3
+click==6.7
+Flask==1.0.2
+itsdangerous==0.24
+Jinja2==2.10
+MarkupSafe==1.1.1
+packaging==17.1
+psycopg2-binary==2.7.5
+pyparsing==2.2.0
+six==1.11.0
+Werkzeug==0.14.1

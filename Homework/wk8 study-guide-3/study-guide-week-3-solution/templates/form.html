@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p>What kind of message would you like?</p>
+<form action='/results'>
+	<input type="checkbox" name="cheery"> Cheery<br>
+	<input type="checkbox" name="honest"> Honest<br>
+	<input type="checkbox" name="dreary"> Dreary<br>
+   <input type="submit">
+</form>
+
+{% endblock %}
