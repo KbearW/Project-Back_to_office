@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+  <title>Homepage</title>
+</head>
+<body>
+  <h1>UberMelon’s Most Loved Melons</h1>
+        <div class="homepage_img">
+          <img src='http://www.rareseeds.com/assets/1/14/DimThumbnail/Sugar-Baby-Watermelon-web.jpg' alt="img of a melon">
+          
+          <div class="melon-div">
+      <form action="/get-name" method="GET">
+          What's your name?        
+          <input type="text" name="person" required placeholder="What's your name"/>
+          <input type="submit" />
+        
+        </form>
+      </div>
+  </body>
+{% endblock %}

@@ -1,0 +1,38 @@
+h1{
+  font-family: sans-serif;
+  color: red;
+}
+body{
+  background-color: palegoldenrod
+}
+
+img {
+  height: 200px;
+  width: 200px;
+  margin: auto;
+  border: 10px green solid;
+}
+
+p{
+  background-color: palegoldenrod;
+  font: sans-serif;
+}
+
+.melon-div {
+  display: inline-block;
+  padding: 10px;
+  width: 205px;
+  background-color: palegoldenrod;
+  font: sans-serif;
+  margin: auto;
+}
+
+.homepage_img img{
+  display: block;
+  height: 300px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  border: none;
+
+}
